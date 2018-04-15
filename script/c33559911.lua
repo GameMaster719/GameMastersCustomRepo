@@ -1,73 +1,43 @@
---Mask of Impure
+--power of pride
+--scripted by GameMaster (GM)
 function c33559911.initial_effect(c)
-	--Activate
-	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_EQUIP)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetTarget(c33559911.target)
-	e1:SetOperation(c33559911.operation)
-	c:RegisterEffect(e1)
-	--damage
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(33559911,0))
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1)
-	e2:SetCondition(c33559911.damcon)
-	e2:SetTarget(c33559911.damtg)
-	e2:SetOperation(c33559911.damop)
-	c:RegisterEffect(e2)
-	--Destroy
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_LEAVE_FIELD)
-	e3:SetCondition(c33559911.descon)
-	e3:SetOperation(c33559911.desop)
-	c:RegisterEffect(e3)
+--Activate
+local e1=Effect.CreateEffect(c)
+e1:SetType(EFFECT_TYPE_ACTIVATE)
+e1:SetCode(EVENT_FREE_CHAIN)
+e1:SetTarget(c33559911.tg)
+e1:SetOperation(c33559911.activate)
+c:RegisterEffect(e1)
 end
-function c33559911.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TRAP)
+
+function c33559911.filter1(c)
+return c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
-function c33559911.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_SZONE) and c33559911.filter(chkc) and chkc~=c end
-	if chk==0 then return Duel.IsExistingTarget(c33559911.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,c) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c33559911.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,c)
+
+function c33559911.filter2(c)
+return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_EFFECT)
 end
-function c33559911.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		c:SetCardTarget(tc)
-	end
+
+
+function c33559911.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+if chk==0 then return Duel.IsExistingTarget(c33559911.filter1,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingTarget(c33559911.filter2,tp,LOCATION_MZONE,0,1,nil) end
+Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(33559911,0))
+local g1=Duel.SelectTarget(tp,c33559911.filter1,tp,LOCATION_MZONE,0,1,1,nil) --first target
+Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(33559911,1))
+local g2=Duel.SelectTarget(tp,c33559911.filter2,tp,LOCATION_MZONE,0,1,1,g1:GetFirst()) --second target
+Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,g1,1,tp,0)
+Duel.SetOperationInfo(0,CATEGORY_RELEASE,g2,1,tp,0)
 end
-function c33559911.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetHandler():GetFirstCardTarget()
-	return tc and Duel.GetTurnPlayer()==tc:GetControler()
+
+function c33559911.activate(e,tp,eg,ep,ev,re,r,rp)
+local gg,g1=Duel.GetOperationInfo(0,CATEGORY_ANNOUNCE)
+local gg,g2=Duel.GetOperationInfo(0,CATEGORY_RELEASE)
+local tc1=g1:GetFirst()
+local tc2=g2:GetFirst()
+if tc1 and tc1:IsRelateToEffect(e) and tc2 and tc2:IsRelateToEffect(e) then
+Duel.Release(tc2,REASON_COST)
+Duel.SetTargetCard(tc2)
+tc1:CreateEffectRelation(e)
+tc1:CopyEffect(tc2:GetOriginalCode(),RESET_EVENT+0x1fe0000,1)
 end
-function c33559911.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetTargetPlayer(Duel.GetTurnPlayer())
-	Duel.SetTargetParam(1200)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,Duel.GetTurnPlayer(),1200)
-end
-function c33559911.damop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Damage(p,d,REASON_EFFECT)
-end
-function c33559911.descon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsStatus(STATUS_DESTROY_CONFIRMED) then return false end
-	local tc=c:GetFirstCardTarget()
-	return tc and eg:IsContains(tc)
-end
-function c33559911.desop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(), REASON_EFFECT)
 end
