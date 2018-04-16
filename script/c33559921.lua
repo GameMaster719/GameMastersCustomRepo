@@ -1,37 +1,23 @@
---Raigeki (DOR)
+-- Battle Warrior(DOR)
 --scripted by GameMaster(GM)
 function c33559921.initial_effect(c)
---Activate
-local e1=Effect.CreateEffect(c)
-e1:SetCategory(CATEGORY_DESTROY)
-e1:SetType(EFFECT_TYPE_ACTIVATE)
-e1:SetCode(EVENT_FREE_CHAIN)
-e1:SetTarget(c33559921.target)
-e1:SetOperation(c33559921.activate)
-c:RegisterEffect(e1)
+	--attack/Defense update when battled fiend type monster
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetCondition(c33559921.condtion)
+	e1:SetValue(500)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	c:RegisterEffect(e2)
+end
+function c33559921.condtion(e)
+	local ph=Duel.GetCurrentPhase()
+	if not (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) or not e:GetHandler():IsRelateToBattle() then return false end
+	local bc=e:GetHandler():GetBattleTarget()
+	return bc and bc:IsFaceup() and bc:IsRace(RACE_BEAST)
 end
 
-function c33559921.filter(c)
-return c:IsType(TYPE_MONSTER)
-end
-
-function c33559921.target(e,tp,eg,ep,ev,re,r,rp,chk)
-local c=e:GetHandler()
-local seq=e:GetHandler():GetSequence()
-local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq)
-local tc=Duel.GetFieldCard(tp,LOCATION_MZONE,seq)
-if chk==0 then return true end
-local g=Group.CreateGroup()
-if tc then g:AddCard(tc) end
-Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
-end
-
-function c33559921.activate(e,tp,eg,ep,ev,re,r,rp)
-local seq=e:GetHandler():GetSequence()
- local g=Group.CreateGroup()
- local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq)
- if tc then g:AddCard(tc) end
- local tc=Duel.GetFieldCard(tp,LOCATION_MZONE,seq)
-if tc then g:AddCard(tc) end
-if g:GetCount()>0 then Duel.Destroy(g,REASON_EFFECT) end
-end
