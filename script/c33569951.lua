@@ -8,9 +8,11 @@ function c33569951.initial_effect(c)
 	e1:SetOperation(c33569951.operation)
 	c:RegisterEffect(e1)
 end
+
 function c33569951.atktg(e,c)
 	return c:GetFieldID()<=e:GetLabel() and c:IsCode(52040216)
 end
+
 function c33569951.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then

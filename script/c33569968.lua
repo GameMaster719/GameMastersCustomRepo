@@ -1,7 +1,7 @@
 --brain eater bug
 --scripted by GameMaster (GM)
 function c33569968.initial_effect(c)
-aux.EnablePendulumAttribute(c,reg)
+aux.EnablePendulumAttribute(c,true)
 --Retun parasite fusioner monsters to deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(511001039,0))
@@ -13,6 +13,7 @@ aux.EnablePendulumAttribute(c,reg)
 	e1:SetCountLimit(1)
 	e1:SetTarget(c33569968.target)
 	e1:SetOperation(c33569968.operation)
+	e1:SetCondition(c33569968.con)
 	c:RegisterEffect(e1)
 	--attach parasites
 	local e2=Effect.CreateEffect(c)
@@ -25,28 +26,7 @@ aux.EnablePendulumAttribute(c,reg)
 	c:RegisterEffect(e2)
 	end
 	
-	function Auxiliary.EnablePendulumAttribute(c,reg)
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetCode(EFFECT_SPSUMMON_PROC_G)
-    e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-    e1:SetRange(LOCATION_PZONE)
-    e1:SetCountLimit(1,10000000)
-    e1:SetCondition(Auxiliary.PendCondition())
-    e1:SetOperation(Auxiliary.PendOperation())
-    e1:SetValue(SUMMON_TYPE_PENDULUM)
-    c:RegisterEffect(e1)
-    --register by default
-    if reg==nil or reg then
-        local e2=Effect.CreateEffect(c)
-        e2:SetDescription(1160)
-        e2:SetType(EFFECT_TYPE_ACTIVATE)
-        e2:SetCode(EVENT_FREE_CHAIN)
-        e2:SetRange(LOCATION_HAND)
-        c:RegisterEffect(e2)
-    end
-end
-		
+	
 
 function c33569968.filter(c,ft1,ft2,tp)
 	local p=c:GetControler()
@@ -147,10 +127,13 @@ function c33569968.ctop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.EquipComplete()
 end
 
-
+function c33569968.con(e,tp)
+    local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_GRAVE,0,nil) 
+    return g:IsExists(Card.IsCode,1,nil,6205579) or g:IsExists(Card.IsSetCard,1,nil,0x410) 
+end
 
 function c33569968.filter4(c)
-	return c:IsType(TYPE_MONSTER) and (c:GetCode(6205579) and c:IsAbleToDeck())
+	return c:IsSetCard(0x410) or c:IsCode(6205579) and (c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()) 
 end
 function c33569968.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -95,17 +95,24 @@ function comp(c,ec)
     return c~=ec
 end
 
+
+
+function c33569990.confilter(c)
+	return c:IsFaceup() and (c:IsType(TYPE_MONSTER) and c:IsAbleToChangeControler())
+end
+
+
 function c33569990.ctcon(e,tp,eg,ep,ev,re,r,rp)
     return not e:GetHandler():GetCardTarget():SearchCard(comp,e:GetHandler():GetEquipTarget())
 end
 
 function c33569990.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToChangeControler,tp,0,LOCATION_MZONE,1,nil) end
+    if chk==0 then return Duel.IsExistingMatchingCard(c33569990.confilter,tp,0,LOCATION_MZONE,1,nil) end
     Duel.SetOperationInfo(0,CATEGORY_CONTROL,nil,1,1-tp,0)
 end
 
 function c33569990.ctop(e,tp,eg,ep,ev,re,r,rp)
-    local tc=Duel.SelectMatchingCard(tp,Card.IsAbleToChangeControler,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+    local tc=Duel.SelectMatchingCard(tp,c33569990.confilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
     if tc and Duel.GetControl(tc,tp) then
    		--change to plant race
 		local e1=Effect.CreateEffect(e:GetHandler())

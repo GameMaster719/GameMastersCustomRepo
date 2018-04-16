@@ -55,8 +55,7 @@ function c33569969.negop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 			e3:SetReset(RESET_EVENT+0x1fe0000)
 			tc:RegisterEffect(e3)
-			Debug.Message("negateop")
-		end
+			end
 		tc=g:GetNext()
 	end
 end	

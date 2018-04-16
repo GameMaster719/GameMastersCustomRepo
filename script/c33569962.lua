@@ -12,7 +12,7 @@ function c33569962.initial_effect(c)
 end
 
 function c33569962.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSSetable()
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 
 function c33569962.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

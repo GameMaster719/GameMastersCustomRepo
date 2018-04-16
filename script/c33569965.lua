@@ -168,7 +168,7 @@ function c33569965.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c33569965.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) end
 	if e:GetHandler():IsLocation(LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE) then
 		Duel.ConfirmCards(1-tp,e:GetHandler())

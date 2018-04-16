@@ -29,7 +29,43 @@ c:SetUniqueOnField(1,1,33569984)
 	local e4=e2:Clone()
 	e4:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e4)
+	--destroy card on field
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(33569984,2))
+	e5:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_IGNORE_IMMUNE)
+	e5:SetCategory(CATEGORY_DESTROY)
+	e5:SetType(EFFECT_TYPE_QUICK_O)
+	e5:SetCode(EVENT_FREE_CHAIN)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCountLimit(1)
+	e5:SetTarget(c33569984.destg)
+	e5:SetOperation(c33569984.desop)
+	c:RegisterEffect(e5)
 end
+
+
+--destroy trident
+function c33569984.filter4(c)
+	return c:IsFaceup() and c:IsCode(33569977)
+end
+
+
+function c33569984.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsOnField() and c33569984.filter4(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c33569984.filter4,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,c33569984.filter4,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+end
+function c33569984.desop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
+		Duel.Destroy(tc,REASON_COST)
+	end
+end
+
+
+
 
 function c33569984.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c33569984.filter2(chkc) end

@@ -99,7 +99,7 @@ function c33569959.initial_effect(c)
 	c:RegisterEffect(e14)
 end
 
-c33569959.collection={  [11111127]=true; }
+c33569959.collection={  [22222217]=true; }
 
 function c33569959.candyfilter(c)
 	return c33569959.collection[c:GetCode()]
@@ -187,8 +187,8 @@ function c33569959.desop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 		Duel.Destroy(tc,REASON_EFFECT)
 	if Duel.Destroy(tc,REASON_EFFECT)>0  then
-		return  Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,11111127,0,0x4011,2500,2500,7,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,1-tp) end
-		local token=Duel.CreateToken(tp,11111127)
+		return  Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,22222217,0,0x4011,2500,2500,7,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,1-tp) end
+		local token=Duel.CreateToken(tp,22222217)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 	end

@@ -1,8 +1,9 @@
 --leech snail
 --scripted by GameMaster (GM)
 function c33569967.initial_effect(c)
-aux.EnablePendulumAttribute(c,reg)
-	--Parasite fusioner at ..
+c:SetUniqueOnField(1,1,33569967)
+aux.EnablePendulumAttribute(c,true)
+	--Parasite fusioner at endphase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(33569967,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -46,27 +47,7 @@ function c33569967.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 
-function Auxiliary.EnablePendulumAttribute(c,reg)
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetCode(EFFECT_SPSUMMON_PROC_G)
-    e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-    e1:SetRange(LOCATION_PZONE)
-    e1:SetCountLimit(1,10000000)
-    e1:SetCondition(Auxiliary.PendCondition())
-    e1:SetOperation(Auxiliary.PendOperation())
-    e1:SetValue(SUMMON_TYPE_PENDULUM)
-    c:RegisterEffect(e1)
-    --register by default
-    if reg==nil or reg then
-        local e2=Effect.CreateEffect(c)
-        e2:SetDescription(1160)
-        e2:SetType(EFFECT_TYPE_ACTIVATE)
-        e2:SetCode(EVENT_FREE_CHAIN)
-        e2:SetRange(LOCATION_HAND)
-        c:RegisterEffect(e2)
-    end
-end
+
 
 function c33569967.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,400)
@@ -74,7 +55,7 @@ function c33569967.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function c33569967.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==tp and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function c33569967.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

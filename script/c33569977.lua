@@ -81,6 +81,8 @@ function c33569977.initial_effect(c)
 	c:RegisterEffect(e10)
 end
 
+
+
 function c33569977.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer() and Duel.GetAttackTarget()~=nil
 end

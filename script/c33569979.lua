@@ -138,9 +138,12 @@ function c33569979.operation2(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetValue(tc:GetAttribute())
 		token:RegisterEffect(e5)
 		token:CopyEffect(tc:GetOriginalCode(),RESET_EVENT+0x1fe0000,1)
-		Duel.SpecialSummonComplete()
+		local c=e:GetHandler()
 		c:SetCardTarget(token)
-	end
+		Duel.SpecialSummonComplete()
+if c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==22222213 and c:IsPreviousLocation(LOCATION_ONFIELD) then 
+e:GetHandler():CancelCardTarget(token)		
+		end
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		c:SetCardTarget(tc)
@@ -157,9 +160,14 @@ function c33569979.operation2(e,tp,eg,ep,ev,re,r,rp)
 			e5:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 			e5:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e5)
+if tc:IsPreviousPosition(POS_FACEUP)  and c:IsPreviousLocation(LOCATION_ONFIELD) then 
+e:GetHandler():CancelCardTarget(tc)				
 			end
 	end
 end	
+end
+end
+
 function c33569979.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsDisabled() then
 		e:SetLabel(1)
@@ -194,8 +202,14 @@ function c33569979.filter3(c)
 end
 function c33569979.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
+local g=Duel.GetMatchingGroup(c33569979.filter,tp,LOCATION_DECK,0,nil,e,tp,eg,ep,ev,re,r,rp) 
+if g:GetCount()<1  then
+local token=Duel.CreateToken(tp,33569987)
+Duel.SendtoDeck(token,tp,2,REASON_EFFECT)
+
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		local g=Duel.SelectMatchingCard(tp,c33569979.filter3,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 		local eqc=g:GetFirst()
@@ -210,6 +224,8 @@ function c33569979.eqop(e,tp,eg,ep,ev,re,r,rp)
 		eqc:RegisterEffect(e1)
 		end
 end
+end
+
 function c33569979.eqlimit(e,c)
 	return c:IsCode(33569979)
 end

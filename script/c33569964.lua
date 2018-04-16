@@ -14,8 +14,9 @@ function self.initial_effect(c)
   e1:SetTarget(self.tg)
   e1:SetOperation(self.op)
   c:RegisterEffect(e1)
-end
-
+ end
+ 
+ 
 function self.cd(e,tp,eg,ep,ev,re,r,rp)
   return Duel.GetAttacker():IsControler(1-tp)
 end
@@ -48,7 +49,7 @@ function self.op(e,tp,eg,ep,ev,re,r,rp)
   local sco=sg:GetCount()
   if loc-sco>0 then
     for i=1,loc-sco do
-      sg:AddCard(Duel.CreateToken(tp,511005062))
+      sg:AddCard(Duel.CreateToken(tp,22222232))
     end
   end
   local stc=sg:GetFirst()
@@ -114,20 +115,32 @@ function self.op(e,tp,eg,ep,ev,re,r,rp)
     e5:SetValue(0)
     stc:RegisterEffect(e5,true)
     stc:SetStatus(STATUS_NO_LEVEL,true)
-    stc=sg:GetNext()
+	stc=sg:GetNext()
   end
   Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEDOWN_DEFENSE)
-  if tc:IsFaceup() then
-    if tc:IsHasEffect(EFFECT_DEVINE_LIGHT) then Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
-    else
-      Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+  if Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEDOWN_DEFENSE) then 
+    Duel.ChangePosition(sg,POS_FACEDOWN_DEFENSE,REASON_RULE)
+    Duel.SpecialSummonComplete()
+	end
+    if tc:IsFaceup() then
+    Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then
+	local c=e:GetHandler()
+	c:RegisterFlagEffect(22222232,RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END,0,1)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
+	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_MZONE,0,nil)
+		Duel.ShuffleSetCard(g)  
       tc:ClearEffectRelation()
     end
   end
   sg:AddCard(tc)
-  Duel.ConfirmCards(1-tp,sg)
-  Duel.ShuffleSetCard(sg)
-end
+    end
+
+
+
+
+
+
 
 function self.mimica_cd(e,tp,eg,ep,ev,re,r,rp)
   if Duel.GetCurrentPhase()==PHASE_DAMAGE then

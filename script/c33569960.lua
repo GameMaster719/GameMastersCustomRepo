@@ -14,14 +14,14 @@ function c33569960.initial_effect(c)
 	e1:SetTarget(c33569960.sptg)
 	e1:SetOperation(c33569960.spop)
 	c:RegisterEffect(e1)
-	--destroy monster turn to chocolate
+	--mass batch chocolate beam
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(33569960,0))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(5)
+	e2:SetCountLimit(1)
 	e2:SetTarget(c33569960.destg)
 	e2:SetOperation(c33569960.desop)
 	c:RegisterEffect(e2)
@@ -30,7 +30,7 @@ function c33569960.initial_effect(c)
 	e3:SetDescription(aux.Stringid(33569960,1))
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(2)
+	e3:SetCountLimit(1)
 	e3:SetCost(c33569960.Pcost)
 	e3:SetOperation(c33569960.operation2)
 	c:RegisterEffect(e3)
@@ -63,7 +63,7 @@ function c33569960.initial_effect(c)
 	e7:SetCode(EFFECT_CANNOT_DISABLE)
 	e7:SetRange(LOCATION_MZONE)
 	c:RegisterEffect(e7)
---turn monster to candy
+	--turn monster to candy
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e8:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -92,7 +92,7 @@ function c33569960.initial_effect(c)
 	c:RegisterEffect(e10)
 	end
 
-c33569960.collection={ [11111125]=true; [11111126]=true; }
+c33569960.collection={ [22222215]=true; [22222216]=true; }
 
 function c33569960.candyfilter(c)
 	return c33569960.collection[c:GetCode()]
@@ -157,23 +157,23 @@ function c33569960.filter2(c)
 	return c:IsType(TYPE_MONSTER) and not c33569960.collection[c:GetCode()]
 end
 
+
+
 function c33569960.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and c33569960.filter2(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.IsExistingTarget(c33569960.filter2,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c33569960.filter2,tp,0,LOCATION_MZONE,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,c33569960.filter2,tp,0,LOCATION_MZONE,1,nil,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c33569960.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.Destroy(tc,REASON_EFFECT)
-	if Duel.Destroy(tc,REASON_EFFECT)>0  then
-	return  Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,11111126,0,0x4011,2500,2500,7,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,1-tp) end
-			local token=Duel.CreateToken(tp,11111126)
-			Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)
-			end
- end
+    local g=Duel.GetMatchingGroup(c33569960.filter2,tp,0,LOCATION_MZONE,nil)
+    local tg=Group.CreateGroup()
+    for i=1,Duel.Destroy(g,REASON_EFFECT) do
+        tg:AddCard(Duel.CreateToken(tp,22222216))
+    end
+    Duel.SpecialSummon(tg,0,1-tp,1-tp,false,false,POS_FACEUP)
+end
 
 function c33569960.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
@@ -213,7 +213,7 @@ function c33569960.sptg5(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c33569960.spop5(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,11111125,0,0x4011,1200,0,4,RACE_INSECT,ATTRIBUTE_EARTH) then return end
-	local token=Duel.CreateToken(tp,11111125)
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,22222215,0,0x4011,1200,0,4,RACE_INSECT,ATTRIBUTE_EARTH) then return end
+	local token=Duel.CreateToken(tp,22222215)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
