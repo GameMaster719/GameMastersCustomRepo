@@ -1,6 +1,6 @@
 --Gate Guardian (DOR)
 --scripted by GameMaster(GM)
-function c33589979.initial_effect(c)
+function c511005855.initial_effect(c)
 c:EnableReviveLimit()
 --battle dam 0
 local e1=Effect.CreateEffect(c)
