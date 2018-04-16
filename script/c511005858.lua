@@ -44,7 +44,7 @@ end
 
 
 function c511005858.condition(e,tp,eg,ep,ev,re,r,rp)
-return e:GetHandler():IsDefensePos() and eg:IsExists(function (c) return c:GetFlagEffect(284)>0 and c:GetFlagEffectLabel(284)~=0 end,1,nil) and re and re:IsActiveType(TYPE_SPELL ) and re:GetType()==TYPE_SPELL
+return e:GetHandler():IsDefensePos() and eg:IsExists(function (c) return c:GetFlagEffect(284)>0 and c:GetFlagEffectLabel(284)~=0 end,1,nil) and re and re:GetHandler():GetType()==TYPE_SPELL 
 end
 
 
