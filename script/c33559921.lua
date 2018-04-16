@@ -1,34 +1,37 @@
---Chiron the Mage (Anime)
-function c33559921.initial_effect(c)
-	--destroy spell/trap
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(33559921,0))
-	e1:SetCategory(CATEGORY_DESTROY)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTarget(c33559921.destg)
-	e1:SetOperation(c33559921.desop)
-	c:RegisterEffect(e1)
+--Raigeki (DOR)
+--scripted by GameMaster(GM)
+function c511005783.initial_effect(c)
+--Activate
+local e1=Effect.CreateEffect(c)
+e1:SetCategory(CATEGORY_DESTROY)
+e1:SetType(EFFECT_TYPE_ACTIVATE)
+e1:SetCode(EVENT_FREE_CHAIN)
+e1:SetTarget(c511005783.target)
+e1:SetOperation(c511005783.activate)
+c:RegisterEffect(e1)
 end
-function c33559921.cfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_MONSTER+TYPE_TRAP) and c:IsDiscardable()
+
+function c511005783.filter(c)
+return c:IsType(TYPE_MONSTER)
 end
-function c33559921.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and (c:IsFacedown() and c:IsDestructable())
+
+function c511005783.target(e,tp,eg,ep,ev,re,r,rp,chk)
+local c=e:GetHandler()
+local seq=e:GetHandler():GetSequence()
+local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq)
+local tc=Duel.GetFieldCard(tp,LOCATION_MZONE,seq)
+if chk==0 then return true end
+local g=Group.CreateGroup()
+if tc then g:AddCard(tc) end
+Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
-function c33559921.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c33559921.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c33559921.filter,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c33559921.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-end
-function c33559921.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.ConfirmCards(tp,tc)
-		Duel.Destroy(tc,REASON_EFFECT)
-	end
+
+function c511005783.activate(e,tp,eg,ep,ev,re,r,rp)
+local seq=e:GetHandler():GetSequence()
+ local g=Group.CreateGroup()
+ local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,4-seq)
+ if tc then g:AddCard(tc) end
+ local tc=Duel.GetFieldCard(tp,LOCATION_MZONE,seq)
+if tc then g:AddCard(tc) end
+if g:GetCount()>0 then Duel.Destroy(g,REASON_EFFECT) end
 end
