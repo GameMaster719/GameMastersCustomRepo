@@ -13,7 +13,7 @@ function c33569931.initial_effect(c)
 end
 
 function c33569931.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FAIRY)
+	return c:IsRace(RACE_FAIRY)
 end
 
 function c33569931.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -25,6 +25,7 @@ function c33569931.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_BATTLE_START)
 	e1:SetTarget(c33569931.destg)
 	e1:SetOperation(c33569931.desop)
+	e1:SetCondition(c33569931.con)
 	e1:SetReset(RESET_EVENT+0x00040000)
 	tc:RegisterEffect(e1)
 	--negate
@@ -36,14 +37,26 @@ function c33569931.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-
+function c33569931.con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local bc=c:GetBattleTarget()
+	return bc and bc:IsRace(RACE_FIEND)
+end
 
 function c33569931.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.GetFirstTarget()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c33569931.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c33569931.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,tc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c33569931.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc)
+	g=Duel.SelectTarget(tp,c33569931.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc)
+	if g:GetCount()>0 then
+		local tg=g
+		if tg:GetCount()>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+			Duel.SetTargetCard(tg)
+			Duel.HintSelection(g)
+end
+end
 end
 
 
@@ -57,7 +70,8 @@ function c33569931.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 function c33569931.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	if bc:IsRelateToBattle() then
+	if not bc and bc:IsRace(RACE_FIEND) then return end
+	if bc:IsRelateToBattle() and bc:IsRace(RACE_FIEND) then
 		Duel.Destroy(bc,REASON_EFFECT)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

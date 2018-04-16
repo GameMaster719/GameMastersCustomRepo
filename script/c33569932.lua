@@ -13,7 +13,7 @@ function c33569932.initial_effect(c)
 end
 
 function c33569932.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_WARRIOR)
+	return  c:IsRace(RACE_WARRIOR)
 end
 
 function c33569932.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -23,6 +23,7 @@ function c33569932.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_BATTLE_START)
+	e1:SetCondition(c33569932.con)
 	e1:SetTarget(c33569932.destg)
 	e1:SetOperation(c33569932.desop)
 	e1:SetReset(RESET_EVENT+0x00040000)
@@ -36,6 +37,12 @@ function c33569932.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
+
+function c33569932.con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local bc=c:GetBattleTarget()
+	return bc and bc:IsRace(RACE_DRAGON)
+end
 
 
 function c33569932.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -56,8 +63,10 @@ function c33569932.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 
 function c33569932.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+if  Duel.GetAttacker()==nil or Duel.GetAttackTarget()==nil then return end	
 	local bc=c:GetBattleTarget()
-	if bc:IsRelateToBattle() then
+	if not bc and bc:IsRace(RACE_DRAGON) then return end
+	if bc:IsRelateToBattle() and bc:IsRace(RACE_DRAGON) then
 		Duel.Destroy(bc,REASON_EFFECT)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
