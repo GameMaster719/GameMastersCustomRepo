@@ -11,10 +11,6 @@ function c75233710.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 
-function c75233710.filter2(c,mc)
-    return c:GetCode()==mc:GetCode()
-end
-
 
 function c75233710.afilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
@@ -29,7 +25,8 @@ function c75233710.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-	if Duel.GetMatchingGroupCount(filter2,tp,LOCATION_MZONE,0,nil,c)>=2 then
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+if g:GetCount()>g:GetClassCount(Card.GetCode) then
 	Duel.Draw(tp,2,REASON_EFFECT)
 		end
 	end
