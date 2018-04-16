@@ -29,9 +29,13 @@ function c511005611.initial_effect(c)
 	e3:SetOperation(c511005611.disop)
 	c:RegisterEffect(e3)
 end
+
+
 function c511005611.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL)
+    return re:IsActiveType(TYPE_SPELL) and not re:GetHandler():IsImmuneToEffect(e) --card that are immune/ credit to MLD
 end
+
+
 function c511005611.distg(e,c)
 	return c:IsType(TYPE_SPELL)
 end

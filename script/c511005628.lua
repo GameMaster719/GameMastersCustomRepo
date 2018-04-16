@@ -1,5 +1,5 @@
 --Unfair Treaty
---scripted by GameMaster (GM)
+--scripted by Shad3 & GameMaster (GM)
 function c511005628.initial_effect(c)
 --Activate
 local e1=Effect.CreateEffect(c)
