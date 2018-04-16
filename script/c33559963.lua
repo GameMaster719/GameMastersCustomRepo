@@ -20,7 +20,7 @@ c:RegisterEffect(e2)
 end
 --attach
 function c33559963.thfilter(c,tp)
-return c:IsSetCard(0x51EEF) and c:IsControler(tp) and c:GetSummonType()==SUMMON_TYPE_XYZ
+return c:IsControler(tp) and c:GetSummonType()==SUMMON_TYPE_XYZ
 end
 function c33559963.condition(e,tp,eg,ep,ev,re,r,rp)
 return eg:IsExists(c33559963.thfilter,1,nil,tp)

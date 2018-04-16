@@ -1,35 +1,32 @@
---Rope of Life (Anime)
+--Mask of Darkness (DOR)
+--scripted by GameMaster (GM)
 function c33559939.initial_effect(c)
-	--Activate
+	--flip
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_FLIP)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_BATTLE_DESTROYED)
-	e1:SetTarget(c33559939.target)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP)
+	e1:SetTarget(c33559939.tg)
 	e1:SetOperation(c33559939.activate)
 	c:RegisterEffect(e1)
 end
-function c33559939.filter(c,e,tp,tid)
-	return c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()==tp and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+
+function c33559939.filter(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
-function c33559939.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local tc=eg:GetFirst()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and eg:IsExists(c33559939.filter,1,nil,e,tp) end
-	local g=eg:Filter(c33559939.filter,nil,e,tp)
-	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+
+function c33559939.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c33559939.filter(chkc) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(c33559939.filter,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+	Duel.SelectTarget(tp,c33559939.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 end
 function c33559939.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local c=e:GetHandler()
-	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)>0 then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
-		e1:SetValue(800)
-		tc:RegisterEffect(e1)
-	end
+	if tc:IsRelateToEffect(e) and tc:IsSSetable() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+		Duel.SSet(tp,tc)
+		Duel.ConfirmCards(1-tp,tc)
+		end
 end
+

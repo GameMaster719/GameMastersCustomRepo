@@ -39,10 +39,10 @@ function c33559954.condition(e,tp)
 end
 
 function c33559954.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,6) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,4) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(6)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,6)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,4)
 end
 function c33559954.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

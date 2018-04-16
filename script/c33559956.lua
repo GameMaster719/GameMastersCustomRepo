@@ -34,23 +34,25 @@ function c33559956.initial_effect(c)
 	e5:SetCondition(c33559956.condition)
 	e5:SetOperation(c33559956.operation)
 	c:RegisterEffect(e5)
-	-- Cannot Disable effect
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e6:SetCode(EFFECT_CANNOT_DISABLE)
-	e6:SetRange(LOCATION_MZONE)
-	c:RegisterEffect(e6)
+	
 end
+
+
+function c33559956.filter2(c)
+	return not c:IsHasEffect(EFFECT_NECRO_VALLEY) and (c:IsAbleToHand() and c:IsAbleToGrave() and c:IsSetCard(0x510))
+end
+
+
+
 function c33559956.spfilter(c)
-	return c:IsCode(33559948) --and c:IsReleaseable()
+	return c:IsCode(33559948) and c:IsAbleToGrave()
 end
 function c33559956.spcon(e,c)
 	if c==nil then return true end
 	local f=Duel.GetFieldCard(c:GetControler(),LOCATION_SZONE,5)
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c33559956.spfilter,c:GetControler(),LOCATION_ONFIELD,0,1,nil)
-		and f and f:IsSetCard(0x306)
+		and f and f:IsSetCard(0x510)
 end
 function c33559956.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local tc=Duel.SelectMatchingCard(tp,c33559956.spfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
@@ -58,11 +60,12 @@ function c33559956.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 
 function c33559956.condition(e,c)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandler():GetControler(),LOCATION_DECK+LOCATION_GRAVE,0,1,nil,0x306)
+local c=e:GetHandler()
+	return Duel.IsExistingMatchingCard(c33559956.filter2,e:GetHandler():GetControler(),LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
 end
 function c33559956.operation(e,tp,eg,ep,ev,re,r,rp,chk)	
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
-	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,0x306)
+	local g=Duel.SelectMatchingCard(tp,c33559956.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 	Duel.SendtoHand(g,tp,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,g)
 end

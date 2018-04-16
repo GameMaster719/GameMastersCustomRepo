@@ -1,5 +1,6 @@
 --Clear Prism Color Eater
 function c33559948.initial_effect(c)
+	c:SetUniqueOnField(1,1,33559948)
 	--attach
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -52,6 +53,7 @@ function c33559948.initial_effect(c)
 	e8:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e8:SetCode(EFFECT_DESTROY_REPLACE)
 	e8:SetRange(LOCATION_MZONE)
+	e8:SetTarget(c33559948.reptg)
 	c:RegisterEffect(e8)
 	--effect gain LP
 	local e9=Effect.CreateEffect(c)
@@ -63,21 +65,12 @@ function c33559948.initial_effect(c)
 	e9:SetCost(c33559948.efcost)
 	c:RegisterEffect(e9)
 end
-function c33559948.condition(e,tp,eg,ep,ev,re,r,rp)
-return not Duel.IsExistingMatchingCard(function(c,fid)return c:GetFieldID(33559948) end,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler(),e:GetHandler():GetFieldID())
-end
-function c33559948.desfilter2(c)
-	return c:GetFlagEffect(33559948)>0
-end
+
+--attach and if xyz detach material
 function c33559948.filter(c)
 return c:IsAttribute(0xf+0x10) and c:IsFaceup() and not (c:IsType(TYPE_TOKEN+TYPE_FLIP) or c:IsHasEffect(EFFECT_TYPE_TRIGGER_O))
 end
-function c33559948.atkval(e,c)
-	return e:GetHandler():GetOverlayGroup():GetSum(Card.GetBaseAttack)
-end
-function c33559948.defval(e,c)
-	return e:GetHandler():GetOverlayGroup():GetSum(Card.GetBaseDefense)
-end
+
 function c33559948.operation(e,tp,eg,ep,ev,re,r,rp)
    local wg=Duel.GetMatchingGroup(c33559948.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
 --where g is card group
@@ -90,6 +83,7 @@ while c do
 end
 Duel.Overlay(e:GetHandler(),wg)
 end
+
 function c33559948.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local og=c:GetOverlayGroup()
@@ -98,6 +92,58 @@ function c33559948.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(og,REASON_RULE)
 	Duel.Remove(og,nil,REASON_RULE)
 end
+
+--gain atk/def of attached monsters
+function c33559948.atkval(e,c)
+	return e:GetHandler():GetOverlayGroup():GetSum(Card.GetBaseAttack)/2
+end
+function c33559948.defval(e,c)
+	return e:GetHandler():GetOverlayGroup():GetSum(Card.GetBaseDefense)/2
+end
+
+
+function c33559948.condition(e,tp,eg,ep,ev,re,r,rp)
+return not Duel.IsExistingMatchingCard(function(c,fid)return c:GetFieldID(33559948) end,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler(),e:GetHandler():GetFieldID())
+end
+function c33559948.desfilter2(c)
+	return c:GetFlagEffect(33559948)>0
+end
+
+--if has material indestructable by effect
+function c33559948.indval(e,c)
+	return e:GetHandler():GetOverlayCount()>0
+end
+
+
+--destroy replace
+function c33559948.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE) and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
+	if Duel.SelectYesNo(tp,aux.Stringid(77631175,0)) then
+		local c=e:GetHandler()
+		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
+		return true
+	else return false end
+end
+
+
+--recover lp
+function c33559948.efcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+end
+function c33559948.eftg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local op=Duel.SelectOption(tp,aux.Stringid(33559948,0))
+	e:SetLabel(op)
+	end
+	function c33559948.efop(e,tp,eg,ep,ev,re,r,rp)
+	if e:GetLabel()==0 then
+		Duel.Recover(tp,1000,REASON_EFFECT)
+		end
+end
+
+-------------?v
+
 function c33559948.ovcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
@@ -124,28 +170,7 @@ function c33559948.detop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-function c33559948.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE) and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
-	if Duel.SelectYesNo(tp,aux.Stringid(77631175,0)) then
-		local c=e:GetHandler()
-		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
-		return true
-	else return false end
-end
-function c33559948.indval(e,c)
-	return e:GetHandler():GetOverlayCount()>0
-end
-function c33559948.efcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
-function c33559948.eftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local op=Duel.SelectOption(tp,aux.Stringid(33559948,0))
-	e:SetLabel(op)
-	end
-	function c33559948.efop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==0 then
-		Duel.Recover(tp,1000,REASON_EFFECT)
-		end
-end
+
+
+
+

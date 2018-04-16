@@ -76,7 +76,7 @@ Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 end
 end
 function c33559966.spfilter(c)
-return c:IsCode(11111112)
+return c:IsCode(22222203)
 end
 function c33559966.spcon2(e,tp,eg,ep,ev,re,r,rp)
 if Duel.IsExistingMatchingCard(c33559966.spfilter,tp,LOCATION_MZONE,0,1,nil) then return false
@@ -84,16 +84,16 @@ else return true end
 end
 function c33559966.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-and Duel.IsPlayerCanSpecialSummonMonster(tp,11111112,0,0x4011,500,100,2,RACE_SPELLCASTER,ATTRIBUTE_DARK) end
+and Duel.IsPlayerCanSpecialSummonMonster(tp,22222203,0,0x4011,500,100,2,RACE_SPELLCASTER,ATTRIBUTE_DARK) end
 Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function c33559966.spop2(e,tp,eg,ep,ev,re,r,rp)
 if Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 then return end
-if Duel.IsPlayerCanSpecialSummonMonster(tp,11111112,0,0x4011,500,100,2,RACE_SPELLCASTER,ATTRIBUTE_DARK) then
-local token1=Duel.CreateToken(tp,11111112)
+if Duel.IsPlayerCanSpecialSummonMonster(tp,22222203,0,0x4011,500,100,2,RACE_SPELLCASTER,ATTRIBUTE_DARK) then
+local token1=Duel.CreateToken(tp,22222203)
 Duel.SpecialSummonStep(token1,0,tp,tp,false,false,POS_FACEUP)
-local token2=Duel.CreateToken(tp,11111112)
+local token2=Duel.CreateToken(tp,22222203)
 Duel.SpecialSummonStep(token2,0,tp,tp,false,false,POS_FACEUP)
 Duel.SpecialSummonComplete()
 end
