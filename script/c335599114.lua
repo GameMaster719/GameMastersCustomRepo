@@ -57,6 +57,7 @@ function c335599114.initial_effect(c)
 	e7:SetCondition(c335599114.spcon)
 	e7:SetTarget(c335599114.sptg)
 	e7:SetOperation(c335599114.spop)
+	e7:SetCountLimit(1)
 	c:RegisterEffect(e7)
 end
 function c335599114.condition(e,tp,eg,ep,ev,re,r,rp)

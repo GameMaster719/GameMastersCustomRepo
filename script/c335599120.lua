@@ -20,7 +20,7 @@ function c335599120.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function c335599120.activate(e,tp,eg,ep,ev,re,r,rp)
-		local acg=Duel.GetMatchingGroup(c335599120.filter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp,eg,ep,ev,re,r,rp)
+		local acg=Duel.GetMatchingGroup(c335599120.filter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA,0,nil,e,tp,eg,ep,ev,re,r,rp)
 		if acg:GetCount()>0  then
 			local tc=acg:Select(tp,1,1,nil):GetFirst()
 			local tpe=tc:GetType(TYPE_PENDULUM)

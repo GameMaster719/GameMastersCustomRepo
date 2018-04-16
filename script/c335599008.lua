@@ -41,25 +41,19 @@ function c335599008.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCode(EFFECT_CANNOT_CHANGE_CONTROL)
 	c:RegisterEffect(e5)
--- Cannot Disable effect
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e6:SetCode(EFFECT_CANNOT_DISABLE)
-	e6:SetRange(LOCATION_MZONE)
-	c:RegisterEffect(e6)
-	end
+end
 function c335599008.oppthfilter(c)
 return c:IsAbleToHand()
 end
 function c335599008.oppthtg(e,tp,eg,ep,ev,re,r,rp,chk)
-if chk==0 then return Duel.IsExistingMatchingCard(c335599008.oppthfilter,tp,LOCATION_DECK,LOCATION_DECK,1,nil) end
+if chk==0 then return Duel.IsExistingMatchingCard(c335599008.oppthfilter,tp,LOCATION_DECK,0,1,nil) end
 Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c335599008.oppthop(e,tp,eg,ep,ev,re,r,rp)
-Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 local sg=Duel.GetMatchingGroup(c335599008.oppthfilter,tp,LOCATION_DECK,LOCATION_DECK,nil)
 Duel.ConfirmCards(tp,sg)
+Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+local sg=Duel.GetMatchingGroup(c335599008.oppthfilter,tp,LOCATION_DECK,0,nil)
 local g=sg:Select(tp,1,1,nil)
 if g:GetCount()>0 then
 Duel.SendtoHand(g,tp,nil,REASON_EFFECT)

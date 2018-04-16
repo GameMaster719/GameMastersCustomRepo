@@ -34,7 +34,49 @@ function c335599106.initial_effect(c)
 	e4:SetCode(EFFECT_CANNOT_DISABLE)
 	e4:SetRange(LOCATION_MZONE)
 	c:RegisterEffect(e4)
+	--to grave
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e5:SetCode(EVENT_TO_GRAVE)
+	e5:SetOperation(c335599106.regop2)
+	c:RegisterEffect(e5)
 end
+
+	function c335599106.regop2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsReason(REASON_DESTROY) and bit.band(c:GetPreviousLocation(),LOCATION_ONFIELD)~=1 then
+		--spsummon
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(335599106,0))
+		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+		e1:SetRange(LOCATION_GRAVE)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetCost(c335599106.spcost)
+		e1:SetTarget(c335599106.sptg)
+		e1:SetOperation(c335599106.spop)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e1)
+	end
+end
+
+
+function c335599106.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(335599106)==0 end
+	c:RegisterFlagEffect(335599106,nil,0,1)
+end
+
+function c335599106.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+end
+
+function c335599106.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	 Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
+
 function c335599106.valcon(e,re,r,rp)
 	return bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0
 end

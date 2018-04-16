@@ -25,6 +25,12 @@ e3:SetCode(EVENT_DESTROYED)
 e3:SetCondition(c335599136.spcon)
 e3:SetOperation(c335599136.spop)
 c:RegisterEffect(e3)
+--Double tribute
+local e4=Effect.CreateEffect(c)
+e4:SetType(EFFECT_TYPE_SINGLE)
+e4:SetCode(EFFECT_DOUBLE_TRIBUTE)
+e4:SetValue(1)
+c:RegisterEffect(e4)
 end
 
 function c335599136.atkop(e,tp,eg,ep,ev,re,r,rp)

@@ -116,8 +116,13 @@ function c335599007.disop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if re:IsActiveType(TYPE_TRAP+TYPE_SPELL) and rc:IsOnField() then
 		Duel.NegateEffect(ev)
-		if rc:IsRelateToEffect(re) then
-			rc=Duel.Destroy(eg,REASON_EFFECT)
+	if ev  then
+	local re=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)
+    local tc=re:GetFirst()
+	 while tc do
+	 tc=re:GetNext()
+        Duel.Destroy(re,REASON_EFFECT)
+			end
 		end
 	end
 end

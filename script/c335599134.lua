@@ -4,6 +4,7 @@ function c335599134.initial_effect(c)
 	--PUT clear world into play
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetOperation(c335599134.op)
 	e1:SetCondition(c335599134.con)
@@ -11,10 +12,11 @@ function c335599134.initial_effect(c)
 	--while in grave clear world indestructable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_INDESTRUCTABLE)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE)
-	e2:SetTarget(c335599134.infilter)
+	e2:SetTargetRange(LOCATION_SZONE,0)
+	e2:SetTarget(c335599134.indes)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--while in grave cannot activate new field spells
 	local e3=Effect.CreateEffect(c)
@@ -56,10 +58,12 @@ function c335599134.initial_effect(c)
 	e7:SetRange(LOCATION_DECK)
 	e7:SetCondition(c335599134.spcon)
 	c:RegisterEffect(e7)
+	--special summon color eater
 	local e8=Effect.CreateEffect(c)
 	e8:SetDescription(aux.Stringid(335599134,0))
 	e8:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e8:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
 	e8:SetCode(EVENT_DESTROYED)
 	e8:SetCondition(c335599134.condition)
 	e8:SetTarget(c335599134.target)
@@ -77,7 +81,7 @@ function c335599134.initial_effect(c)
 	e10:SetCode(EFFECT_UPDATE_ATTACK)
 	e10:SetRange(LOCATION_GRAVE)
 	e10:SetTargetRange(LOCATION_MZONE,0)
-	e10:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x306))
+	e10:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x510))
 	e10:SetValue(450)
 	c:RegisterEffect(e10)
 	--Retun clear monsters to deck
@@ -111,6 +115,7 @@ function c335599134.initial_effect(c)
 	e14:SetOperation(c335599134.op653)
 	c:RegisterEffect(e14)
 end
+
 function c335599134.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsFacedown() then return end
 	e:GetHandler():RegisterFlagEffect(335599134,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
@@ -134,10 +139,12 @@ function c335599134.op653(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-
+function c335599134.indes(e,c)
+	return c:IsFaceup() and (c:GetSequence()==5 and c:GetOriginalCode()==33579912)
+end
 
 function c335599134.filter4(c)
-	return c:IsSetCard(0x306) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsSetCard(0x510) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function c335599134.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -192,7 +199,7 @@ end
 
 function c335599134.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingMatchingCard(c335599127.filter2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(c335599134.filter2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) 
 	and Duel.CheckLocation(e:GetHandlerPlayer(),LOCATION_SZONE,5) end
 end
 
@@ -211,7 +218,7 @@ function c335599134.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseEvent(tc,EVENT_CHAIN_SOLVED,tc:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
 	end
 end
-function c335599134.infilter(e,c)
+function c335599134.infilter350(e,c)
 	return c:IsType(TYPE_FIELD) and c:IsCode(33900648)
 end
 function c335599134.filter(e,re,tp)
@@ -220,3 +227,8 @@ end
 function c335599134.sfilter(e,c,tp)
 	return c:IsType(TYPE_FIELD) and Duel.GetFieldCard(tp,LOCATION_SZONE,5)~=nil
 end
+
+function c335599134.infilter(e,c)
+	return bit.band(c:GetType(),0x80000)==0x80000 and c:GetCode()~=33579912
+	end
+	

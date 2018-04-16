@@ -1,5 +1,5 @@
 --Remove Trap
---scripted by GameMaster (GM)
+--scripted by GameMaster (GM) +shad3
 function c335599142.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

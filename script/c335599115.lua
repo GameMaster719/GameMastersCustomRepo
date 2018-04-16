@@ -1,4 +1,4 @@
-	--HellWorm
+	--Condemmed Angel
 	--Scripted by GameMaster(GM)
 	function c335599115.initial_effect(c)
 	--damage
@@ -9,6 +9,7 @@
 	e1:SetCode(EVENT_RECOVER)
 	e1:SetCondition(c335599115.cd)
 	e1:SetOperation(c335599115.op)
+	e1:SetCondition(c335599115.con)
 	c:RegisterEffect(e1)
 	--draw
 	local e2=Effect.CreateEffect(c)
@@ -51,6 +52,15 @@
 	e5:SetOperation(c335599115.recop)
 	c:RegisterEffect(e5)
 end
+
+function c335599115.con(e,tp,eg,ep,ev,re,r,rp)
+return not Duel.IsExistingMatchingCard(c335599115.filter10,tp,LOCATION_ONFIELD,0,1,nil) 
+end
+function c335599115.filter10(c)
+	return c:IsFaceup() and c:IsCode(86327225)
+end
+
+
 function c335599115.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
 end

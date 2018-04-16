@@ -10,7 +10,7 @@ function c335599005.initial_effect(c)
 	e1:SetCondition(c335599005.spcon)
 	e1:SetOperation(c335599005.spop)
 	c:RegisterEffect(e1)
-	--pos
+	--shift monster pos
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(335599005,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -22,7 +22,7 @@ function c335599005.initial_effect(c)
 	e2:SetTarget(c335599005.postg)
 	e2:SetOperation(c335599005.posop)
 	c:RegisterEffect(e2)
-	--pos change
+	--change a monsters pos
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_POSITION)
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -32,9 +32,9 @@ function c335599005.initial_effect(c)
 	e3:SetTarget(c335599005.target)
 	e3:SetOperation(c335599005.operation)
 	c:RegisterEffect(e3)
-	--instant
+	--gemini summon a gemini monster on field or in hand
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(19041767,0))
+	e4:SetDescription(aux.Stringid(335599005,0))
 	e4:SetCategory(CATEGORY_SUMMON)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetRange(LOCATION_MZONE)
@@ -60,12 +60,12 @@ function c335599005.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,500)
 end
 function c335599005.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c19041767.filter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c335599005.filter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function c335599005.operation1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-	local g=Duel.SelectMatchingCard(tp,c19041767.filter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c335599005.filter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then
 		local s1=tc:IsSummonable(true,nil)

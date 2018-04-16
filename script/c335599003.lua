@@ -44,7 +44,7 @@ e5:SetCode(EFFECT_ATTACK_COST)
 e5:SetCost(c335599003.atcost)
 e5:SetOperation(c335599003.atop)
 c:RegisterEffect(e5)
---indes
+--indestructiable effect
 local e6=Effect.CreateEffect(c)
 e6:SetType(EFFECT_TYPE_SINGLE)
 e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -140,6 +140,12 @@ c:RegisterEffect(e12)
 	local e18=e17:Clone()
 	e18:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 	c:RegisterEffect(e18)
+	--cannot turn set
+	local e19=Effect.CreateEffect(c)
+	e19:SetType(EFFECT_TYPE_SINGLE)
+	e19:SetCode(EFFECT_CANNOT_TURN_SET)
+	e19:SetValue(1)
+	c:RegisterEffect(e19)
 end
 function c335599003.spfilter(c)
 return c:GetCode()==170000170 or c:GetCode()==6132
