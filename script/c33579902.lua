@@ -1,6 +1,6 @@
 --Bunillas' Radioactive Super Carrot Friend
 function c33579902.initial_effect(c)
-c:EnableCounterPermit(0x2000,LOCATION_GRAVE)  
+c:EnableCounterPermit(0x3AB,LOCATION_GRAVE)  
   --Activate
     local e1=Effect.CreateEffect(c)
     e1:SetCategory(CATEGORY_EQUIP)
@@ -45,7 +45,7 @@ c:EnableCounterPermit(0x2000,LOCATION_GRAVE)
 	e5:SetOperation(c33579902.operation2)
 	c:RegisterEffect(e5)
 	c:SetTurnCounter(0)
-	--Destroy
+	--check to see if negated
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -113,7 +113,7 @@ function c33579902.operation4(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_DEFENSE)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+0x3659Bfe0000)
 	e1:SetValue(-ev)
 	at:RegisterEffect(e1)
 	if e:GetHandler():IsRelateToEffect(e) then
@@ -146,7 +146,7 @@ if not Duel.IsPlayerCanSpecialSummonMonster(tp,22222200,0,0x4011,1200,0,4,RACE_I
 	local e0=Effect.CreateEffect(e:GetHandler())
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e0:SetCode(EFFECT_COUNTER_PERMIT+0x1)
+	e0:SetCode(EFFECT_COUNTER_PERMIT+0x3AB)
 	e0:SetRange(LOCATION_MZONE)
 	token:RegisterEffect(e0)
 	--atk up
@@ -170,15 +170,15 @@ if not Duel.IsPlayerCanSpecialSummonMonster(tp,22222200,0,0x4011,1200,0,4,RACE_I
 end
 
 function c33579902.target83(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanAddCounter(0x1,1) end
+	if chk==0 then return e:GetHandler():IsCanAddCounter(0x3AB,1) end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0)
 end
 function c33579902.operation83(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1,1)
+	e:GetHandler():AddCounter(0x3AB,1)
 end
 
 function c33579902.atkval(e,token)
-	return token:GetCounter(0x1)*300
+	return token:GetCounter(0x3AB)*300
 end	
 	
 	
