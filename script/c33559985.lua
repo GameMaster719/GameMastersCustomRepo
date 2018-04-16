@@ -85,12 +85,12 @@ function c33559985.initial_effect(c)
 	e10:SetTargetRange(0,1)
 	e10:SetCondition(c33559985.becon5)
 	c:RegisterEffect(e10)
-	--special summon rule
+	--special summon if control mummymon
 	local e11=Effect.CreateEffect(c)
 	e11:SetType(EFFECT_TYPE_FIELD)
 	e11:SetCode(EFFECT_SPSUMMON_PROC)
 	e11:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e11:SetRange(LOCATION_HAND)
+	e11:SetRange(LOCATION_HAND+LOCATION_DECK)
 	e11:SetCondition(c33559985.spcon)
 	c:RegisterEffect(e11)
 	--battle indes
@@ -132,7 +132,7 @@ function c33559985.tglimit4(e,c)
 	return c~=e:GetHandler()
 end
 function c33559985.spcon3(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==tp and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function c33559985.sptg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -141,9 +141,9 @@ function c33559985.sptg3(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c33559985.spop3(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,11111118,0,0x4011,200,200,1,RACE_MACHINE,ATTRIBUTE_EARTH) then return end
-	local token=Duel.CreateToken(tp,11111118)
-	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,22222224,0,0x4011,200,200,1,RACE_MACHINE,ATTRIBUTE_EARTH) then return end
+	local token=Duel.CreateToken(tp,22222224)
+	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 end
 function c33559985.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -152,8 +152,8 @@ function c33559985.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c33559985.operation2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,11111117,0,0x4011,0,0,1,RACE_PLANT,ATTRIBUTE_EARTH,POS_FACEUP_DEFENSE,1-tp) then
-		local token=Duel.CreateToken(tp,11111117)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,22222225,0,0x4011,0,0,1,RACE_PLANT,ATTRIBUTE_EARTH,POS_FACEUP_DEFENSE,1-tp) then
+		local token=Duel.CreateToken(tp,22222225)
 		if Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE) then
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)

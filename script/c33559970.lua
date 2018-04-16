@@ -26,6 +26,18 @@ e3:SetRange(LOCATION_MZONE)
 e3:SetTarget(c33559970.rtg)
 e3:SetOperation(c33559970.rop)
 c:RegisterEffect(e3)
+--immune
+local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetRange(LOCATION_PZONE)
+	e4:SetCode(EFFECT_IMMUNE_EFFECT)
+	e4:SetValue(c33559970.efilter)
+	c:RegisterEffect(e4)
+end
+
+function c33559970.efilter(e,te)
+	return te:IsActiveType(TYPE_TRAP+TYPE_SPELL)
 end
 
 

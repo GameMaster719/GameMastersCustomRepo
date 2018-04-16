@@ -5,7 +5,7 @@ function c33559975.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCost(c33559975.cost)
 	e1:SetTarget(c33559975.target)
 	e1:SetOperation(c33559975.activate)
@@ -46,7 +46,7 @@ function c33559975.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,22222214,0,0x4011,0,0,1,RACE_REPTILE,ATTRIBUTE_DEVINE) then return end
 	for i=1,3 do
 		local token=Duel.CreateToken(tp,22222214)
-		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)

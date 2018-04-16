@@ -1,5 +1,6 @@
 --Mummymon
 function c33559984.initial_effect(c)
+c:SetUniqueOnField(1,1,33559984)
 	--handes
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(33559984,0))
@@ -32,7 +33,7 @@ function c33559984.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_SPSUMMON_PROC)
 	e4:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e4:SetRange(LOCATION_HAND)
+	e4:SetRange(LOCATION_HAND+LOCATION_DECK)
 	e4:SetCondition(c33559984.spcon)
 	c:RegisterEffect(e4)
 end

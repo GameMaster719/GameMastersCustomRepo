@@ -17,7 +17,7 @@ function c33559983.initial_effect(c)
 	e2:SetOperation(c33559983.spop)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
-	--to grave
+	--damage=discard
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(33559983,0))
 	e3:SetCategory(CATEGORY_TOGRAVE)
@@ -81,7 +81,7 @@ function c33559983.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(33559983,5))
 	local op=Duel.SelectOption(tp,aux.Stringid(33559983,1),aux.Stringid(33559983,2),aux.Stringid(33559983,3))
 	e:SetLabel(op)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,1-tp,LOCATION_DECK)
 end
 function c33559983.tgfilter(c,ty)
 	return c:IsType(ty) and c:IsAbleToGrave()
@@ -89,9 +89,9 @@ end
 function c33559983.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=nil
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
-	if e:GetLabel()==0 then g=Duel.SelectMatchingCard(1-tp,c33559983.tgfilter,1-tp,LOCATION_DECK,0,1,1,nil,TYPE_MONSTER)
-	elseif e:GetLabel()==1 then g=Duel.SelectMatchingCard(1-tp,c33559983.tgfilter,1-tp,LOCATION_DECK,0,1,1,nil,TYPE_SPELL)
-	else g=Duel.SelectMatchingCard(1-tp,c33559983.tgfilter,1-tp,LOCATION_DECK,0,1,1,nil,TYPE_TRAP) end
+	if e:GetLabel()==0 then g=Duel.SelectMatchingCard(1-tp,c33559983.tgfilter,1-tp,LOCATION_DECK,0,2,2,nil,TYPE_MONSTER)
+	elseif e:GetLabel()==1 then g=Duel.SelectMatchingCard(1-tp,c33559983.tgfilter,1-tp,LOCATION_DECK,0,2,2,nil,TYPE_SPELL)
+	else g=Duel.SelectMatchingCard(1-tp,c33559983.tgfilter,1-tp,LOCATION_DECK,0,2,2,nil,TYPE_TRAP) end
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function c33559983.spcon2(e,tp,eg,ep,ev,re,r,rp)

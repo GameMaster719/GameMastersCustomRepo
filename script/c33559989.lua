@@ -1,6 +1,6 @@
 --MeatalSeadramon
 function c33559989.initial_effect(c)
-	c:SetUniqueOnField(1,0,33559989)
+	c:SetUniqueOnField(1,1,33559989)
 --Summon with 3 Tribute
 	local e0=Effect.CreateEffect(c)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -24,7 +24,7 @@ function c33559989.initial_effect(c)
 	e2:SetCondition(c33559989.econ)
 	e2:SetValue(c33559989.efilter)
 	c:RegisterEffect(e2)
-	--atk
+	--cannot be battle target
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -32,7 +32,7 @@ function c33559989.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(c33559989.econ)
 	c:RegisterEffect(e3)
-	--spsummon
+	--sp summon if used as material
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_BE_MATERIAL)

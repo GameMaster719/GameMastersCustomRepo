@@ -58,7 +58,7 @@ function c33559982.initial_effect(c)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCode(EFFECT_CHANGE_CODE)
 	e6:SetCondition(aux.IsDualState)
-	e6:SetValue(11111116)
+	e6:SetValue(66500)
 	c:RegisterEffect(e6)
 end
 function c33559982.condition(e,tp,eg,ep,ev,re,r,rp)
