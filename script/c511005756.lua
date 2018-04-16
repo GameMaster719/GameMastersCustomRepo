@@ -5,7 +5,6 @@ function c511005756.initial_effect(c)
 local e1=Effect.CreateEffect(c)
 e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 e1:SetType(EFFECT_TYPE_ACTIVATE)
-e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 e1:SetCode(EVENT_FREE_CHAIN)
 e1:SetTarget(c511005756.target)
 e1:SetOperation(c511005756.activate)
@@ -17,9 +16,10 @@ return c:IsRace(RACE_FISH+RACE_SEASERPENT) and c:IsFaceup()
 end
 
 function c511005756.target(e,tp,eg,ep,ev,re,r,rp,chk)
-if chk==0 then return Duel.IsExistingTarget(c511005756.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+local tc=Duel.GetFirstTarget()
+if chk==0 then return Duel.IsExistingTarget(c511005756.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,tc) end
 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-Duel.SelectTarget(tp,c511005756.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+Duel.SelectTarget(tp,c511005756.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc)
 end
 
 function c511005756.activate(e,tp,eg,ep,ev,re,r,rp)
