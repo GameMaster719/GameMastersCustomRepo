@@ -39,7 +39,7 @@ e6:SetDescription(aux.Stringid(511005627,0))
 e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
 e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 e6:SetRange(LOCATION_MZONE)
-e6:SetCode(EVENT_PREDRAW)
+e6:SetCode(EVENT_PHASE+PHASE_STANDBY)
 e6:SetCondition(c511005627.spcon)
 e6:SetCost(c511005627.spcost)
 e6:SetTarget(c511005627.sptg)
@@ -56,7 +56,7 @@ c:RegisterEffect(e7)
 local e8=Effect.CreateEffect(c)
 e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 e8:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-e8:SetCode(EVENT_PHASE+PHASE_END)
+e8:SetCode(EVENT_PREDRAW)
 e8:SetRange(LOCATION_MZONE)
 e8:SetCountLimit(1)
 e8:SetCondition(c511005627.condition2)
@@ -66,24 +66,23 @@ end
 
 c511005627.collection={ [87756343]=true; [511002500]=true;  }
 
-
 --counter reset at 4 ct
 function c511005627.op7(e,tp,eg,ep,ev,re,r,rp)
 local ct=e:GetLabel()
 ct=ct+1
 e:SetLabel(ct)
 e:GetHandler():SetTurnCounter(ct)
-if ct==5 then
+if ct==4 then
 e:Reset()
 end
 end
-
 
 --position change
 function c511005627.potg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 if chk==0 then return e:GetHandler():IsAttackPos() end
 Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
 end
+
 function c511005627.poop(e,tp,eg,ep,ev,re,r,rp)
 local c=e:GetHandler()
 if c:IsFaceup() and c:IsAttackPos() and c:IsRelateToEffect(e) then
@@ -91,6 +90,7 @@ c:SetTurnCounter(0)
 Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 end
 end
+
 --count summon
 function c511005627.regop(e,tp,eg,ep,ev,re,r,rp)
 e:GetHandler():RegisterFlagEffect(511005627,RESET_EVENT+0x1ec0000+RESET_PHASE+PHASE_END,0,1)
@@ -100,8 +100,8 @@ function c511005627.condition2(e,tp)
 return e:GetHandler():IsDefensePos() and Duel.GetTurnPlayer()==tp
 end
 
-function c511005627.spcon(e,c,tp)
-return (Duel.GetTurnPlayer()==tp and e:GetHandler():GetTurnCounter(e)>=4 )
+function c511005627.spcon(e)
+return  e:GetHandler():GetTurnCounter(e)==4 
 end
 
 function c511005627.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
