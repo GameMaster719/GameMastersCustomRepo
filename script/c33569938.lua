@@ -11,7 +11,7 @@ function c33569938.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c33569938.filter(c)
-    return c:IsType(TYPE_MONSTER) and (c:IsFaceup() and c:GetAttack()<=1000)
+    return c:IsType(TYPE_MONSTER)  and c:GetAttack()<=1000
   end
 
 c33569938.collection={ [511005597]=true; [7914843]=true; [5257687]=true; [75285069]=true; [39180960]=true; [70307656]=true; [2792265]=true; [4035199]=true; [78636495]=true; [44913552]=true; [31242786]=true;  }
@@ -45,7 +45,7 @@ end
 
 
 function c33569938.filter2(c)
-return c and c:IsFaceup()
+return c and c:IsFaceup() and not c:IsCode(33599949)
 end
 
 function tgcond(e,tp,eg,ep,ev,re,r,rp)

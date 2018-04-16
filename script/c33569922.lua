@@ -42,24 +42,9 @@ local c=e:GetHandler()
 if bit.band(c:GetSummonType(),SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL then
 Duel.ChangePosition(c,POS_FACEDOWN_DEFENSE)
 end
-local e1=Effect.CreateEffect(c)
-e1:SetCategory(CATEGORY_POSITION)
-e1:SetType(EFFECT_TYPE_IGNITION)
-e1:SetRange(LOCATION_MZONE)
-e1:SetCondition(c33569922.con)
-e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-e1:SetReset(RESET_PHASE+PHASE_END)
-e1:SetOperation(c33569922.flipop)
-c:RegisterEffect(e1)
 end 
 
 function c33569922.con(e)
 	return e:GetHandler():IsFacedown()
 end
 
-function c33569922.flipop(e)
-local c=e:GetHandler()
-if c:IsRelateToEffect(e) and c:IsFacedown() then
-Duel.ChangePosition(c,POS_FACEUP_ATTACK)
-end
-end

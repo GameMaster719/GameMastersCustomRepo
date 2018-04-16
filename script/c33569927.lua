@@ -16,7 +16,7 @@ c33569927.collection={ [87756343]=true; [58192742]=true; [81179446]=true; [81843
 
 
 function c33569927.filter(c)
-	return c:IsFaceup() and c33569927.collection[c:GetCode()]
+	return  c33569927.collection[c:GetCode()]
 end
 
 

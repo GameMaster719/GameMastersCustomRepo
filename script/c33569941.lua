@@ -13,16 +13,19 @@ function c33569941.initial_effect(c)
 	e1:SetOperation(c33569941.operation)
 	c:RegisterEffect(e1)
 end
+
 function c33569941.condition(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(1-e:GetHandler():GetPreviousControler())
 	return e:GetHandler():IsReason(REASON_BATTLE)
 end
+
 function c33569941.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(e:GetLabel())
 	Duel.SetTargetParam(300)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,e:GetLabel(),300)
 end
+
 function c33569941.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)

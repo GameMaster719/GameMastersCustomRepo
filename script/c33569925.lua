@@ -12,7 +12,7 @@ function c33569925.initial_effect(c)
 end
 
 function c33569925.act_fil(c)
-  return c:IsFaceup() and c:IsRace(RACE_PLANT)
+  return c:IsRace(RACE_PLANT)
 end
 
 function c33569925.act_tg(e,tp,eg,ep,ev,re,r,rp,chk)

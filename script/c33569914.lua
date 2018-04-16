@@ -13,7 +13,7 @@ function c33569914.initial_effect(c)
 end
 
 function c33569914.filter(c,e,tp,lp)
-	if c:GetCode()~=33569915 or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false) then return false end
+	if  c:GetCode()~=33569915 or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false) then return false end
 	return lp>c:GetLevel()*200
 end
 

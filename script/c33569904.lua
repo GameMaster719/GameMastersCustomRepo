@@ -1,32 +1,32 @@
---Dragon Deeker (DOR)
---scripted by GameMaster (GM)
+--mistrust
+--scripted by GameMaster (GM) and Snrk
 function c33569904.initial_effect(c)
-	--atkdef up
+	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(33569904,0))
-	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
-	e1:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
-	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e1:SetCondition(c33569904.con)
-	e1:SetOperation(c33569904.op)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
+	--control
+	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_CONTROL)
+	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetTarget(c33569904.target)
+	e2:SetOperation(c33569904.operation)
+	c:RegisterEffect(e2)
 end
-function c33569904.con(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	return bc and bc:IsRace(RACE_DRAGON)
+function c33569904.filter(c,e,tp)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsControlerCanBeChanged()
 end
-function c33569904.op(e,tp,eg,ep,ev,re,r,rp)
+function c33569904.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chk==0 then return eg:IsExists(c33569904.filter,1,nil,e,1-tp) end
+end
+function c33569904.operation(e,tp,eg,ep,ev,re,r,rp)
+	local tc
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
-		e1:SetValue(500)
-		c:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_UPDATE_DEFENSE)
-		c:RegisterEffect(e2)
-	end
+	local g=eg:Filter(c33569904.filter,nil,e,1-tp)
+	if g:GetCount()<1 or not c:IsRelateToEffect(e) then return end
+	if g:GetCount()>1 then tc=g:Select(tp,1,1,nil) else tc=g:GetFirst() end
+	if tc then Duel.GetControl(tc,tp) end
 end

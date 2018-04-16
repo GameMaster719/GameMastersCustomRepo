@@ -1,5 +1,5 @@
 --laughing flower (DOR)
---scripted by GameMaster (GM)
+--scripted by GameMaster (GM) + Shad3
 function c33569926.initial_effect(c)
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)

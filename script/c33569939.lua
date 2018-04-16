@@ -1,7 +1,7 @@
 --Insect Imitation (DOR)
---scripted by GameMaster (GM)
+--scripted by GameMaster (GM)+ Shad3
 function c33569939.initial_effect(c)
---Activate
+	--Activate
     local e1=Effect.CreateEffect(c)
     e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -10,16 +10,78 @@ function c33569939.initial_effect(c)
     e1:SetTarget(c33569939.target)
     e1:SetOperation(c33569939.activate)
     c:RegisterEffect(e1)
+	--elf egg
+    local e1=Effect.CreateEffect(c)
+    e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+    e1:SetType(EFFECT_TYPE_ACTIVATE)
+    e1:SetCode(EVENT_FREE_CHAIN)
+    e1:SetCost(c33569939.cost2)
+    e1:SetTarget(c33569939.target2)
+    e1:SetOperation(c33569939.activate2)
+    c:RegisterEffect(e1)
 end
 
-c33569939.collection={ [2964201]=true; [42418084]=true; [36121917]=true; [98582704]=true; [11793047]=true; [20032555]=true; [511009183]=true; [63259351]=true; [
-512000089]=true; [511001078]=true; [511002402]=true; [511009182]=true;  }
+--[[
+*Ryu-ran==2964201
+*monster egg==36121917
+*Gorgon egg==11793047
+
+
+]]--
+c33569939.collection={ [2964201]=true;  [36121917]=true;  [11793047]=true;  }
 
 function c33569939.filter(c)
     return c:IsFaceup() and c33569939.collection[c:GetCode()]
 end
+----------------------------
+
+function c33569939.filter2(c)
+    return c:IsFaceup() and c:IsCode(98582704)
+end
 
 
+c33569939.collection3={ 15025844,
+93221206,
+21417692,
+59983499, 
+69140098
+}
+
+
+
+function c33569939.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.CheckReleaseGroup(tp,c33569939.filter2,1,nil) end
+    local g=Duel.SelectReleaseGroup(tp,c33569939.filter2,1,1,nil)
+    Duel.Release(g,REASON_COST)
+end
+
+function c33569939.target2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=0
+		and Duel.IsPlayerCanSpecialSummon(tp) end
+	
+end
+function c33569939.activate2(e,tp,eg,ep,ev,re,r,rp)
+    if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
+    if Duel.GetLocationCount(tp,LOCATION_MZONE)>=0
+        and Duel.IsPlayerCanSpecialSummon(tp) then
+        for i=1,1 do
+            local token=Duel.CreateToken(tp,c33569939.collection3[math.random(#c33569939.collection3)])
+					  --SUMMON CHANGE TO FACEDOWN
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+			e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+			e1:SetOperation(c33569939.op)
+			token:RegisterEffect(e1)
+			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)
+		    end
+        Duel.SpecialSummonComplete()
+    end
+end
+
+
+
+----------------------------
 function c33569939.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.CheckReleaseGroup(tp,c33569939.filter,1,nil) end
     local g=Duel.SelectReleaseGroup(tp,c33569939.filter,1,1,nil)
@@ -97,8 +159,9 @@ Duel.ChangePosition(c,POS_FACEUP_ATTACK)
 end
 end
 
-c33569939.collection2={ 74677422
-,46986414
+c33569939.collection2={ 91782219--crabturtle
+,74677422--redeyes
+,46986416--darkmagician
 ,33569900
 ,33569901
 ,33569903
@@ -139,6 +202,47 @@ c33569939.collection2={ 74677422
 ,33569961
 ,33569962
 ,33569963
+,33569997
+,33579928
+,33579929
+,33579930
+,33579931
+,33579932
+,33579933
+,33579935
+,33579936
+,33579938
+,33579939
+,33579965
+,33579970
+,33579971
+,33579976
+,33579977
+,33579978
+,33579979
+,33579980
+,33579981
+,33579982
+,33579983
+,33579984
+,33579988
+,33579990
+,33579991
+,33579992
+,33579993
+,33579994
+,33579995
+,33579997
+,33579998
+,33579999
+,33589900
+,33589902
+,33589903
+,33589906
+,33589907
+,33589908
+,33589909
+,33589912
 ,335599148
 ,335599149
 ,335599150
@@ -191,6 +295,8 @@ c33569939.collection2={ 74677422
 ,511004334
 ,511004338
 ,511004342
+,511005597
+,511005602
 ,511005606
 ,511005607
 ,511005608
@@ -209,4 +315,5 @@ c33569939.collection2={ 74677422
 ,511005621
 ,511005622
 ,511005625
-,511005626 }
+,511005626
+,511005627 }

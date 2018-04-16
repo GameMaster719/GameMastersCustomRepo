@@ -5,7 +5,7 @@ function c33569937.initial_effect(c)
  local e1=Effect.CreateEffect(c)
   e1:SetType(EFFECT_TYPE_ACTIVATE)
   e1:SetCode(EVENT_FREE_CHAIN)
-  e1:SetCategory(CATEGORY_ATKCHANGE)
+  e1:SetCategory(CATEGORY_DEFCHANGE)
   e1:SetTarget(c33569937.act_tg)
   e1:SetOperation(c33569937.act_op)
   c:RegisterEffect(e1)
@@ -17,7 +17,7 @@ end
 
 function c33569937.act_tg(e,tp,eg,ep,ev,re,r,rp,chk)
   if chk==0 then return Duel.IsExistingMatchingCard(c33569937.act_fil,tp,LOCATION_MZONE,0,1,nil) end
-  Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,0,0,0)
+  Duel.SetOperationInfo(0,CATEGORY_DEFCHANGE,nil,0,0,0)
 end
 
 function c33569937.act_op(e,tp,eg,ep,ev,re,r,rp)

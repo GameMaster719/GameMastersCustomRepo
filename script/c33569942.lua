@@ -11,11 +11,13 @@ function c33569942.initial_effect(c)
 	e1:SetOperation(c33569942.op)
 	c:RegisterEffect(e1)
 end
+
 function c33569942.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	return bc and bc:IsRace(RACE_MACHINE)
 end
+
 function c33569942.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then

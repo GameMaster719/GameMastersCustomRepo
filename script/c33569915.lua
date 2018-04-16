@@ -2,19 +2,21 @@
 --scripted by GameMaster (GM)
 function c33569915.initial_effect(c)
 	c:EnableReviveLimit()
-	--turn monster to candy
+	--turn monster to candy--hmm??
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_BATTLE_DESTROYING)
 	e1:SetOperation(c33569915.regop)
+	e1:SetCondition(c33569915.atkcon)
 	c:RegisterEffect(e1)
+	--Cookie of monster destroyed
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(33569915,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetCountLimit(1)
 	e2:SetCondition(c33569915.spcon)
 	e2:SetTarget(c33569915.sptg)
@@ -119,7 +121,9 @@ function c33569915.desop(e,tp,eg,ep,ev,re,r,rp)
 			end
 end
 
-
+function c33569915.atkcon(e,tp,eg,ep,ev,re,r,rp)
+    return e:GetHandler()==Duel.GetAttacker() and Duel.GetAttackTarget()~=nil
+end
 
 c33569915.collection={ [22222215]=true; [22222216]=true; }
 

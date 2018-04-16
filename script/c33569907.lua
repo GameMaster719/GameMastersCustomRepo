@@ -13,7 +13,7 @@ end
 
 function c33569907.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsReason(REASON_BATTLE) and c:IsFaceup()  end
+	if chk==0 then return c:IsReason(REASON_BATTLE) end
 		Duel.SendtoDeck(c,tp,2,REASON_EFFECT)
 		Duel.ShuffleDeck(tp)
-	 end
+end
