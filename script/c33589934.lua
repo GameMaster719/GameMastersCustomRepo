@@ -181,8 +181,18 @@ local oppmonNum = Duel.GetMatchingGroupCount(c33589934.filter,tp,LOCATION_HAND,0
 local s1=math.min(oppmonNum,oppmonNum)	
 	Duel.DiscardHand(tp,c33589934.filter6,2,s1,REASON_EFFECT+REASON_DISCARD) 
 	Duel.ShuffleHand(tp)
+local tc=Duel.GetFieldCard(tp,LOCATION_GRAVE,Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)-1)
+if chk==0 then return tc and (tc:IsType(TYPE_SPELL) or tc:IsType(TYPE_MONSTER)) end	
+if tc and tc:IsType(TYPE_SPELL+TYPE_TRAP) then
+Duel.SSet(tp,tc) 
+else 
+local c=e:GetHandler()
+if tc and tc:IsType(TYPE_MONSTER)and Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEDOWN_ATTACK)~=0 then
+Duel.SpecialSummonComplete()
+	
 end
-
+end
+end
 
 
 

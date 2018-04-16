@@ -67,19 +67,16 @@ local pack={}
 	pack[1]={}
 	
 --Rare cards ++++	
-pack[1][1]={ 
- 
-33589922
+pack[1][1]={ 33589922
 ,33589923
 ,511005670--tremendous fire 
 ,511005702--pumpking king of ghosts
 ,54652250--maneater bug
-,99426834--beastking of the swamps
-,33599962--mimicat--MIMICAT
+,99426834--beastking of the swamps,33599962--mimicat--MIMICAT
 ,83764718--monster reborn
 ,33569930--antimagic fragrance
 ,33569938--crush card
-,33589932--HARPIES FEATHER DUSTER
+,511005782--HARPIES FEATHER DUSTER
 ,33569939--insect imitation
 ,33569953--multiply
 ,511005692--lord of d
@@ -98,7 +95,7 @@ pack[1][1]={
 ,335599175--shapesnather
 ,335599176--mositercreater
 ,335599177--bagworm
-,335599191--copycat
+,511005804--copycat
 ,511005680--seal of the ancients
 ,511005597--carrat idol
 --pupaofmoth
@@ -106,18 +103,15 @@ pack[1][1]={
 ,33599962--mimicat
 ,511005611--temple of skulls
 ,511005660--tree of enlightment
-
 --**do not alter below here**
 ,94716515--eradication aresol
 ,38199696--red medicine
 
 
-
  }
  
 --power ups +  seems the 2s are spells also
-pack[1][2]={
-33569925
+pack[1][2]={ 33569925
 ,511005721--stop defense 
 ,33599986--magical neutralizing forcefield
 ,33569927
@@ -140,7 +134,7 @@ pack[1][2]={
 ,335599157
 ,511005761
 ,511005736
-,335599191
+,511005804
 ,511005763
 ,511005764
 ,335599195
@@ -163,7 +157,6 @@ pack[1][2]={
 ,33599981--buring spear 
 ,33599982--follow wind
 ,33599983--fiend castle
-
 ,33589992--invigoration
 ,33589999--spring of rebirth
 
@@ -172,8 +165,7 @@ pack[1][2]={
 --added all in pack 3 updated to newcards ids
 
 --thinking all races?
-pack[1][3]={ 
-33559910
+pack[1][3]={ 33559910
 ,511005717
 ,511005718
 ,33559920
@@ -196,14 +188,12 @@ pack[1][3]={
 ,511005722
 ,33569934
 ,511005703
-
 ,33569944
 ,33569945
 ,511005741
 ,511005724
 ,511005742
 ,511005743
-
 ,33569961
 ,511005725
 ,511005704
@@ -213,7 +203,7 @@ pack[1][3]={
 ,33579931
 ,511005726
 ,33579933
-511005745
+,511005745
 ,511005705
 ,33579970
 ,511005765
@@ -244,7 +234,6 @@ pack[1][3]={
 ,33589915
 ,33589917
 ,33589918
-
 ,511005730
 ,33589969
 ,33589980
@@ -256,7 +245,6 @@ pack[1][3]={
 ,33599944
 ,33599946
 ,33599948
-
 ,511005758
 ,33599952
 ,33599955
@@ -268,10 +256,8 @@ pack[1][3]={
 ,335599158
 ,335599160
 ,335599161
-
 ,335599169
 ,335599170
-
 ,335599172
 ,335599173
 ,335599174
@@ -302,7 +288,6 @@ pack[1][3]={
 ,511005602
 ,511005607
 ,511005608
-
 ,511005610
 ,511005611
 ,511005612
@@ -317,13 +302,11 @@ pack[1][3]={
 ,511005621
 ,511005622
 ,511005626
-
 ,511005632
 ,511005651
 ,511005652
 ,511005658
 ,511005659
-
 ,511005663
 ,511005665
 ,511005666
@@ -350,7 +333,6 @@ pack[1][3]={
 ,511005698
 ,511005699
 ,511005700
-
 --**race Beast warrior**
 ,14977074--garoozis
 ,76184692--hestome giant
@@ -361,7 +343,6 @@ pack[1][3]={
 ,26378150--rude kaiser
 ,511005724--pantherwarrior
 ,56369281--wolf axwielder
-
 --end
 --**Race Pyro**
 --dragon piper
@@ -511,8 +492,7 @@ pack[1][4]={ 511005745--mystical elf
 	}
 
 --Rares	??think had it at traps at one pont aka adjust
-pack[1][5]={ 
-33569923
+pack[1][5]={ 33569923
 ,33589913
 ,33589914
 ,99426834--beastking of the swamps
@@ -541,8 +521,7 @@ pack[1][5]={
 	for _,v in ipairs(pack[1][4]) do table.insert(pack[1][5],v) end
 		
 pack[2]={}
- pack[2][1]={
-33589922
+ pack[2][1]={ 33589922
 ,33589923
 ,511005670--tremendous fire 
 ,33599901--Labrynth wall
@@ -555,16 +534,16 @@ pack[2]={}
 ,33589938--call of the grave
 ,33569930--antimagic fragrance
 ,33569931--enchanted javlin
-,33589932--harpies featherduster
+,511005782--harpies featherduster
 ,33569939--insect imitation
 ,33569953--multiply
 ,511005692--lord of d
 ,33579972--timeseal
 ,33579975--heavy storm
 ,511005672--shadow of eyes
-,33589932--HARPIES FEATHER DUSTER
+,511005782--HARPIES FEATHER DUSTER
 --larvaofmoth
-,335599191--copycat
+,511005804--copycat
 ,511005680--seal of the ancients
 --pupaofmoth
 ,511005660--tree of enlightment
@@ -572,11 +551,10 @@ pack[2]={}
  } 
  
  
-pack[2][2]={ 
-33569913
+pack[2][2]={ 33569913
 ,511005721--stop defense
 ,33599986--magical neutralizing forcefield
-,33569925
+,511005771
 ,33569927
 ,33569928
 ,33569932
@@ -598,8 +576,8 @@ pack[2][2]={
 ,33589923
 
 ,33589930
-,33589932
-,33589935
+,511005782
+,511005796
 ,33589937
 ,33589939
 
@@ -629,7 +607,7 @@ pack[2][2]={
 ,335599157
 ,511005761
 ,511005736
-,335599191
+,511005804
 ,511005763
 ,511005764
 ,335599195
@@ -638,8 +616,7 @@ pack[2][2]={
 
 } 
 --monsters
-pack[2][3]={ 
-33559910
+pack[2][3]={ 33559910
 ,511005717
 ,511005718
 ,33559920
@@ -679,7 +656,7 @@ pack[2][3]={
 ,33579931
 ,511005726
 ,33579933
-511005745
+,511005745
 ,511005705
 ,33579970
 ,511005765
@@ -899,8 +876,7 @@ pack[2][3]={
 
 } 
 
-pack[2][4]={ 
-511005745--mystical elf
+pack[2][4]={ 511005745--mystical elf
 ,511005722--dark elf
 --pgreat moth
 ,511005719--mask of darkness
@@ -962,8 +938,7 @@ pack[2][4]={
 
 }
 
- pack[2][5]={ 
- 33569923
+ pack[2][5]={ 33569923
 ,33589913
 ,33589914
 ,99426834--beastking of the swamps
@@ -989,15 +964,14 @@ pack[2][4]={
 }
  		
 pack[3]={}
- pack[3][1]={  
-33589922
+ pack[3][1]={  33589922
 ,33589923
 ,33599901--Labrynth wall
 ,511005702--pumpking
 ,54652250--maneater bug
 --pgreat moth
 ,83764718--monster reborn
-,33589932--HARPIES FEATHER DUSTER
+,511005782--HARPIES FEATHER DUSTER
 ,33569930--antimagic fragrance
 ,33569931--enchanted javlin
 ,33569938--crush card
@@ -1008,18 +982,17 @@ pack[3]={}
 ,33579975--heavy storm
 ,511005672--shadow of eyes
 --larvaofmoth
-,335599191--copycat
+,511005804--copycat
 ,511005680--seal of the ancients
 --pupaofmoth
 ,511005660--tree of enlightment
 
 }
 
- pack[3][2]={ 
-33569913
+ pack[3][2]={ 33569913
 ,511005721--stop defense
 ,33599986--magical neutralizing forcefield
-,33569925
+,511005771
 ,33569927
 ,33569928
 ,33569932
@@ -1043,8 +1016,8 @@ pack[3]={}
 ,33589923
 
 ,33589930
-,33589932
-,33589935
+,511005782
+,511005796
 ,33589937
 ,33589939
 
@@ -1074,7 +1047,7 @@ pack[3]={}
 ,335599157
 ,511005761
 ,511005736
-,335599191
+,511005804
 ,511005763
 ,511005764
 ,335599195
@@ -1108,8 +1081,7 @@ pack[3]={}
 }
 
 --monsters 
- pack[3][3]={ 
- 33559910
+ pack[3][3]={ 33559910
 ,511005717
 ,511005718
 ,33559920
@@ -1149,7 +1121,7 @@ pack[3]={}
 ,33579931
 ,511005726
 ,33579933
-511005745
+,511005745
 ,511005705
 ,33579970
 ,511005765
@@ -1448,8 +1420,7 @@ pack[3]={}
 pack[4]={}
 
 --Rare
- pack[4][1]={  
- 33589922
+ pack[4][1]={  33589922
 ,33589923
 ,99426834--beastking of the swamps
 ,511005702--pumpking
@@ -1460,7 +1431,7 @@ pack[4]={}
 ,511002501--greatmoth
 ,33569930--antimagic fragrance
 ,33569931--enchanted javlin
-,33589932--HARPIES FEATHER DUSTER
+,511005782--HARPIES FEATHER DUSTER
 ,33569939--insect imitation
 ,33569953--multiply
 ,511005692--lord of d
@@ -1470,7 +1441,7 @@ pack[4]={}
 ,54652250--maneater bug
 --toonworld
 --larvaofmoth
-,335599191--copycat
+,511005804--copycat
 ,511005680--seal of the ancients
 --pupaofmoth
 ,511005611--temple of skulls
@@ -1479,10 +1450,9 @@ pack[4]={}
 }
 
 --Power ups No rituals 
- pack[4][2]={ 
-33569913
+ pack[4][2]={ 33569913
 ,511005721--stop defense
-,33569925
+,511005771
 ,33599986--magical neutralizing forcefield
 ,33569927
 ,33569928
@@ -1526,8 +1496,8 @@ pack[4]={}
 ,33589999--spring of rebirth
 ,33589923
 ,33589930
-,33589932
-,33589935
+,511005782
+,511005796
 ,33589937
 ,33589939
 
@@ -1556,7 +1526,7 @@ pack[4]={}
 ,335599157
 ,511005761
 ,511005736
-,335599191
+,511005804
 ,511005763
 ,511005764
 ,335599195
@@ -1565,8 +1535,7 @@ pack[4]={}
   
 }
 
- pack[4][3]={
- 33559910
+ pack[4][3]={ 33559910
 ,511005717
 ,511005718
 ,33559920
@@ -1604,7 +1573,7 @@ pack[4]={}
 ,33579931
 ,511005726
 ,33579933
-511005745
+,511005745
 ,511005705
 ,33579970
 ,511005765
@@ -1864,8 +1833,7 @@ pack[4]={}
 
 
 --traps/rituals?
- pack[4][5]={ 
- 33569923
+ pack[4][5]={ 33569923
 ,33589913
 ,33589914
 ,33589919
@@ -2046,16 +2014,19 @@ function scard.op(e,tp,eg,ep,ev,re,r,rp)
 	--before duel starts
 	local c=e:GetHandler()
 	local tp=c:GetControler()
+	--rose tokens
 	local token=Duel.CreateToken(tp,33599941)
 	Duel.SendtoDeck(token,tp,POS_FACEDOWN,REASON_EFFECT)
 	local token2=Duel.CreateToken(1-tp,33599942)
 	Duel.SendtoDeck(token2,1-tp,POS_FACEDOWN,REASON_EFFECT)
+	--dor draw
 	local token3=Duel.CreateToken(tp,33589934)
 	Duel.SendtoHand(token3,tp,2,REASON_EFFECT)
 	Duel.Remove(token3,POS_FACEUP,REASON_RULE)
 	local token4=Duel.CreateToken(1-tp,33589934)
 	Duel.SendtoHand(token4,1-tp,2,REASON_EFFECT)
 	Duel.Remove(token4,POS_FACEUP,REASON_RULE)
+	--dor field
 	local token5=Duel.CreateToken(tp,33599949)
 	Duel.SendtoHand(token5,tp,2,REASON_EFFECT)
 	Duel.MoveToField(token5,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
@@ -2172,4 +2143,5 @@ else return false end
 	--Shuffle deck and add card
 	Duel.ShuffleDeck(p)
 	Duel.SendtoHand(Duel.GetDecktopGroup(p,hn),nil,REASON_RULE)
-		end
+end
+
