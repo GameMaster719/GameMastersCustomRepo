@@ -25,5 +25,5 @@ function c511005619.cfilter(c)
 	return c:IsFaceup() and c:IsCode(86318356)
 end
 function c511005619.condition(e,tp,eg,ep,ev,re,r,rp)
-return Duel.IsExistingMatchingCard(c511005619.cfilter,tp,LOCATION_ONFIELD,0,1,nil) 
+return Duel.IsExistingMatchingCard(c511005619.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) 
 end

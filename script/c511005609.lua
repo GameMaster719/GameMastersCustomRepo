@@ -35,5 +35,5 @@ function c511005609.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c511005609.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(e,0)
+	Duel.ChangeBattleDamage(ep,0)
 end
