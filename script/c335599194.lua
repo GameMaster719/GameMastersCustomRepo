@@ -12,7 +12,7 @@ function c335599194.initial_effect(c)
 end
 
 function c335599194.act_fil(c)
-  return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)
+  return  c:IsAttribute(ATTRIBUTE_WATER)
 end
 
 function c335599194.act_tg(e,tp,eg,ep,ev,re,r,rp,chk)

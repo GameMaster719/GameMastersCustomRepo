@@ -63,7 +63,7 @@ function c335599147.atop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Release(g,REASON_COST)
 end	
 function c335599147.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==tp and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function c335599147.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -77,14 +77,20 @@ function c335599147.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 end
 
+function c335599147.filter(c)
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsCode(33413638)
+end
+
 function c335599147.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,1-tp,LOCATION_REMOVED)
+	if chk==0 then return Duel.IsExistingTarget(c335599147.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
+	local g=Duel.GetMatchingGroup(c335599147.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 end
+
 function c335599147.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local g=Duel.GetFieldGroup(tp,LOCATION_REMOVED,0)
+local g=Duel.GetMatchingGroup(c335599147.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
+	if g:GetCount()>0 then
 	Duel.SendtoDeck(g,1-tp,2,REASON_EFFECT)
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		end
+	end
 end
+	

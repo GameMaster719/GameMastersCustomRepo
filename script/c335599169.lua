@@ -20,7 +20,8 @@ function c335599169.initial_effect(c)
     c:RegisterEffect(e2)
 end
 	
-c335599169.collection={ [511005597]=true; [7914843]=true; [5257687]=true; [75285069]=true; [39180960]=true; [70307656]=true; [2792265]=true; [4035199]=true; [78636495]=true; [44913552]=true; [31242786]=true;  }
+c335599169.collection={ [511005597]=true; [7914843]=true; [5257687]=true; [75285069]=true; [39180960]=true;
+ [70307656]=true; [2792265]=true; [4035199]=true; [78636495]=true; [44913552]=true; [31242786]=true;  }
 
 function c335599169.condition3(e)
 	return e:GetHandler():IsAttackPos()
@@ -39,7 +40,7 @@ function c335599169.seqop(e,tp,eg,ep,ev,re,r,rp)
 	elseif s==8 then nseq=3
 	else nseq=4 end
 	Duel.MoveSequence(c,nseq)  
-	 Duel.PayLPCost(1-tp,500) 
+	Duel.PayLPCost(1-tp,50) 
 	end
 	
 	function c335599169.ct_check(c)
@@ -48,13 +49,17 @@ end
 
 
 function c335599169.filter2(c)
-return c and c:IsFaceup()
+return c and c:IsFaceup() and not c:IsCode(33599949)
 end
 
 function tgcond(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     return bit.band(c:GetReason(),REASON_BATTLE+REASON_DESTROY)==REASON_BATTLE+REASON_DESTROY
 end
+
+
+
+
 
 function condition2(e)
   return

@@ -23,21 +23,37 @@ function c335599157.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+0x00040000)
+		e1:SetCondition(c335599157.con)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
+		e2:SetCondition(c335599157.con)
 		e2:SetReset(RESET_EVENT+0x00040000)
 		tc:RegisterEffect(e2)
 		end
 end
+
+function c335599157.con(e,c)
+local c=e:GetHandler()
+	return not c:IsHasEffect(33589953)
+end
+
 
 function c335599157.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.GetFirstTarget()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c335599157.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c335599157.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,tc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c335599157.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc)
+	local g=Duel.SelectTarget(tp,c335599157.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc)
+	if g:GetCount()>0 then
+		local tg=g
+		if tg:GetCount()>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+			Duel.SetTargetCard(tg)
+			Duel.HintSelection(g)
+	end
+end
 end
 
 function c335599157.aclimit(e,re,tp)

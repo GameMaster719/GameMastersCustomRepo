@@ -8,25 +8,54 @@ function c335599190.initial_effect(c)
 	e1:SetOperation(c335599190.op)
 	e1:SetTarget(c335599190.tg)
 	c:RegisterEffect(e1)
+	--cannot turn set
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_CANNOT_TURN_SET)
+	e2:SetCondition(c335599190.con)
+	e2:SetValue(1)
+	c:RegisterEffect(e2)
 end
 
-function c335599190.tg(e,c)
-return Duel.GetMatchingGroup(c335599190.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+
+function c335599190.con(e,c)
+local c=e:GetHandler()
+	return not c:IsHasEffect(335599199)
 end
 
-function c335599190.filter1(c)
-    return c:IsType(TYPE_SPELL+TYPE_PENDULUM+TYPE_TRAP) and c:IsFaceup()
-  end
+function c335599190.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanTurnSet,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
+end
+
+
+function c335599190.filter(c)
+	return c:IsAttackPos() and c:IsFaceup() and c:IsCanTurnSet()
+end
+
+function c335599190.filter2(c)
+	return c:IsDefensePos() and c:IsFaceup() and c:IsCanTurnSet()
+end
+
+function c335599190.filter3(c)
+	return c:IsFaceup() and c:IsCanTurnSet()
+end
+  
 
 
   
 function c335599190.op(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c335599190.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)																												
-		if g:GetCount()>0 then
-		Duel.ChangePosition(g,POS_FACEDOWN)
-	local g=Duel.GetFirstTarget()
-	if g:IsRelateToEffect(e) and c:IsType(TYPE_MONSTER) then
-		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE,0)
-	end
+local g=Duel.GetMatchingGroup(c335599190.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+if g:GetCount()>0 then 
+Duel.ChangePosition(g,POS_FACEDOWN_ATTACK)
+end
+local g=Duel.GetMatchingGroup(c335599190.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+if g:GetCount()>0 then 
+Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
+end
+local g=Duel.GetMatchingGroup(c335599190.filter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
+if g:GetCount()>0 then 
+Duel.ChangePosition(g,POS_FACEDOWN)
 end
 end

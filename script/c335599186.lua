@@ -1,27 +1,83 @@
 --Ray & Tempreature (DOR)
 --scripted by GameMaster (GM)
 function c335599186.initial_effect(c)
-	--baseatk
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(0,LOCATION_MZONE)
-	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-	e1:SetCondition(c335599186.basecon)
-	e1:SetTarget(c335599186.basetg)
-	e1:SetValue(c335599186.baseval)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
-	c:RegisterEffect(e1)
+--when battle occurs revert monster to original ATK/DEF
+local e1=Effect.CreateEffect(c)
+e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+e1:SetRange(LOCATION_MZONE)
+e1:SetCondition(c335599186.atkcon)
+e1:SetOperation(c335599186.atkop)
+c:RegisterEffect(e1)
 end
-function c335599186.basecon(e)
-	local ph=Duel.GetCurrentPhase()
-	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) and Duel.GetAttackTarget()~=nil
-		and (Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler())
+
+function c335599186.atkcon(e,tp,eg,ep,ev,re,r,rp)
+if  Duel.GetAttacker()==nil or Duel.GetAttackTarget()==nil then return end	
+local a=Duel.GetAttacker()
+local d=Duel.GetAttackTarget()
+return (a:GetControler()==tp and a:IsRelateToBattle() and d:GetAttack()~=d:GetBaseAttack()) or (d and d:GetControler()==tp and d:IsRelateToBattle() 
+and a:GetAttack()~=a:GetBaseAttack()) or (a:GetControler()==tp and a:IsRelateToBattle() and d:GetAttack()~=d:GetBaseDefense())
+	or (d and d:GetControler()==tp and d:IsRelateToBattle() and a:GetDefense()~=a:GetBaseDefense())
 end
-function c335599186.basetg(e,c)
-	return c==e:GetHandler():GetBattleTarget()
+
+function c335599186.atkop(e,tp,eg,ep,ev,re,r,rp)
+if  Duel.GetAttacker()==nil or Duel.GetAttackTarget()==nil then return end	
+local atk=0
+if e:GetHandler()==Duel.GetAttacker() then
+local bc=Duel.GetAttackTarget()	
+if(bc:GetBaseAttack()>bc:GetAttack()) then
+atk=bc:GetBaseAttack()-bc:GetAttack()
+else
+atk=bc:GetAttack()>bc:GetBaseAttack()
 end
-function c335599186.baseval(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler():GetBattleTarget()
-	return c:GetBaseAttack()
+local e1=Effect.CreateEffect(e:GetHandler())
+e1:SetType(EFFECT_TYPE_SINGLE)
+e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+e1:SetReset(RESET_EVENT+0x1fe0000)
+e1:SetValue(bc:GetBaseAttack())
+bc:RegisterEffect(e1)
+else
+local bc=Duel.GetAttacker()	
+if(bc:GetBaseAttack()>bc:GetAttack()) then
+atk=bc:GetBaseAttack()-bc:GetAttack()
+else
+atk=bc:GetAttack()>bc:GetBaseAttack()
 end
+local e1=Effect.CreateEffect(e:GetHandler())
+e1:SetType(EFFECT_TYPE_SINGLE)
+e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+e1:SetReset(RESET_EVENT+0x1fe0000)
+e1:SetValue(bc:GetBaseAttack())
+bc:RegisterEffect(e1)
+end
+------------------------
+local def=0
+if e:GetHandler()==Duel.GetAttacker() then
+local bc=Duel.GetAttackTarget()	
+if(bc:GetBaseDefense()>bc:GetDefense()) then
+def=bc:GetBaseDefense()-bc:GetDefense()
+else
+def=bc:GetDefense()>bc:GetBaseDefense()
+end
+local e1=Effect.CreateEffect(e:GetHandler())
+e1:SetType(EFFECT_TYPE_SINGLE)
+e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
+e1:SetReset(RESET_EVENT+0x1fe0000)
+e1:SetValue(bc:GetBaseDefense())
+bc:RegisterEffect(e1)
+else
+local bc=Duel.GetAttacker()	
+if(bc:GetBaseDefense()>bc:GetDefense()) then
+def=bc:GetBaseDefense()-bc:GetDefense()
+else
+def=bc:GetDefense()>bc:GetBaseDefense()
+end
+local e1=Effect.CreateEffect(e:GetHandler())
+e1:SetType(EFFECT_TYPE_SINGLE)
+e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
+e1:SetReset(RESET_EVENT+0x1fe0000)
+e1:SetValue(bc:GetBaseDefense())
+bc:RegisterEffect(e1)
+end
+end
+

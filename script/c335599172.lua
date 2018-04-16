@@ -1,13 +1,16 @@
 --Servant of Catabolism (DOR)
---scripted by GameMaster (GM)
+--scripted by GameMaster (GM) +shad3
 function c335599172.initial_effect(c)
+	--ADD 1 RoseStarCounter
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetCondition(c335599172.condition)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,0xff))
+	e1:SetCondition(c335599172.con)
+	e1:SetTarget(c335599172.tg4)
+	e1:SetOperation(c335599172.op4)
 	c:RegisterEffect(e1)
 	--Crush Terrain
 	local e2=Effect.CreateEffect(c)
@@ -17,6 +20,35 @@ function c335599172.initial_effect(c)
     e2:SetOperation(tgop)
     c:RegisterEffect(e2)
 end
+
+function c335599172.con(e,tp)
+	return Duel.GetTurnPlayer()==tp and e:GetHandler():IsDefensePos()
+end
+
+
+function c335599172.filter1(c)
+	return c:IsFaceup() and c:IsCanAddCounter(0x13A,1)
+end
+
+
+function c335599172.tg4(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsOnField() and c335599172.filter1(chkc) end
+	if chk==0 then return true end
+end
+
+function c335599172.op4(e,tp,eg,ep,ev,re,r,rp)
+	local sg=Duel.GetMatchingGroup(c335599172.filter1,tp,LOCATION_ONFIELD,0,nil)
+	local tc=sg:GetFirst()
+	while tc do
+	local count=tc:GetCounter(0x13A)
+	if count==12 then return end
+	tc:AddCounter(0x13A,1)
+	tc=sg:GetNext()
+end
+end
+
+
+
 
 c335599172.collection={ [511005597]=true; [7914843]=true; [5257687]=true; [75285069]=true; [39180960]=true; [70307656]=true; [2792265]=true; [4035199]=true; [78636495]=true; [44913552]=true; [31242786]=true;  }
 
@@ -31,7 +63,7 @@ end
 
 
 function c335599172.filter2(c)
-return c and c:IsFaceup()
+return c and c:IsFaceup()  and not c:IsCode(33599949)
 end
 
 function tgcond(e,tp,eg,ep,ev,re,r,rp)

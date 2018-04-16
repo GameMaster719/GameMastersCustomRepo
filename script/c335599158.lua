@@ -60,7 +60,7 @@ end
 
 
 function c335599158.filter2(c)
-return c and c:IsFaceup()
+return c and c:IsFaceup()  and not c:IsCode(33599949)
 end
 
 function tgcond(e,tp,eg,ep,ev,re,r,rp)

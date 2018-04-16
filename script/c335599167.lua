@@ -7,8 +7,7 @@ function c335599167.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_BATTLE_DESTROYED)
-	e1:SetCondition(c335599167.condition)
-	e1:SetTarget(c335599167.target)
+		e1:SetTarget(c335599167.target)
 	e1:SetOperation(c335599167.operation)
 	c:RegisterEffect(e1)
 	--cannot attack
@@ -64,7 +63,7 @@ function c335599167.initial_effect(c)
     c:RegisterEffect(e8)
 end
 
-c335599167.collection={ [87756343]=true; [511002500]=true;  }
+
 
 
 --position change
@@ -95,44 +94,35 @@ function c335599167.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
-function c335599167.spfilter2(c,e,tp)
-	return c:IsCode(511005602) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
-end
+
 function c335599167.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c335599167.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c335599167.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c335599167.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
-		tc:CompleteProcedure()
-	end
+	if Duel.IsPlayerCanSpecialSummonMonster(tp,511005602,0,0x4011,1800,1300,5,RACE_INSECT,ATTRIBUTE_EARTH) then
+		local token=Duel.CreateToken(tp,511005602)
+		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummonComplete()
 end
+end
+	
 ------------------------------
---summon larva moth
-function c335599167.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsLocation(LOCATION_DECK) and e:GetHandler():IsReason(REASON_BATTLE)
-end
-function c335599167.spfilter(c,e,tp)
-	return c335599167.collection[c:GetCode()] and c:IsRace(RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACE_UP)
-end
+--summon larva moth token
+
+
 function c335599167.target(e,tp,eg,ep,ev,re,r,rp,chk)
-if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c335599167.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
+if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c335599167.operation(e,tp,eg,ep,ev,re,r,rp)
 if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c335599167.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp)
-	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
-		Duel.ConfirmCards(1-tp,g)
-	end
-	Duel.SpecialSummonComplete()
+if Duel.IsPlayerCanSpecialSummonMonster(tp,511002500,0,0x4011,1800,1300,5,RACE_INSECT,ATTRIBUTE_EARTH) then
+		local token=Duel.CreateToken(tp,511002500)
+		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummonComplete()
+end
 end

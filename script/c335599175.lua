@@ -1,11 +1,10 @@
 --Shapesnatch (DOR)
 --scripted by GameMaster (GM)
 function c335599175.initial_effect(c)
---atk
+	--ATK?DEF gain switch
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_REPEAT+EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
@@ -45,45 +44,31 @@ end
 
 function c335599175.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(c335599175.filter,tp,0,LOCATION_MZONE,c)
+	if g:GetCount()==0 then return false end
+	local tg,val=g:GetMaxGroup(Card.GetAttack)
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
-		e1:SetValue(c335599175.adval)
+		e1:SetValue(val-c:GetAttack())
 		e1:SetCondition(c335599175.conatk)
 		c:RegisterEffect(e1)
+		end 
+	local g=Duel.GetMatchingGroup(c335599175.filter,tp,LOCATION_MZONE,0,c)
+	if g:GetCount()==0 then return false end
+	local tg,val=g:GetMaxGroup(Card.GetDefense)
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		e2:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
 		e2:SetCondition(c335599175.condef)
-		e2:SetValue(c335599175.adval2)
+		e2:SetValue(val-c:GetDefense())
 		c:RegisterEffect(e2)
 		end
 end
-
-
-
-function c335599175.adval(e,c)
-	local g=Duel.GetMatchingGroup(c335599175.filter,tp,LOCATION_MZONE,0,nil)
-	if g:GetCount()==0 then 
-		return 1200
-	else
-		local tg,val=g:GetMaxGroup(Card.GetAttack)
-		return val-1200
-		end
-	end
-	
-	function c335599175.adval2(e,c)
-	local g=Duel.GetFieldGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,c)
-	if g:GetCount()==0 then 
-		return 1700
-	else
-		local tg,val=g:GetMaxGroup(Card.GetDefense)
-		return val-1700
-		end
-	end
 
 c335599175.collection={ [511005597]=true; [7914843]=true; [5257687]=true; [75285069]=true; [39180960]=true; [70307656]=true; [2792265]=true; [4035199]=true; [78636495]=true; [44913552]=true; [31242786]=true;  }
 
@@ -93,7 +78,7 @@ end
 
 
 function c335599175.filter2(c)
-return c and c:IsFaceup()
+return c and c:IsFaceup()  and not c:IsCode(33599949)
 end
 
 function tgcond(e,tp,eg,ep,ev,re,r,rp)
