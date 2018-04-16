@@ -36,13 +36,7 @@ function c33599922.op(e,tp,eg,ep,ev,re,r,rp)
   if tc then g:AddCard(tc) end
    	 local tc=Duel.GetFieldCard(tp,LOCATION_MZONE,seq-1)
        if tc then g:AddCard(tc) end	  
-	 	 --3area monsters opponents 
- local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,seq)
-       if tc  then g:AddCard(tc) end 
-	local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,seq+1)
-  if tc then g:AddCard(tc) end
-      local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,seq-1)
-       if tc then g:AddCard(tc) end	  
+	 	 
 	 if g:GetCount()>0 then Duel.Destroy(g,REASON_EFFECT) end
   end
   
