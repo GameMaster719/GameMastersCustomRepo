@@ -1,28 +1,28 @@
 --Jirai Gumo (DOR)
 --scripted by GameMaster(GM)
-function c33599956.initial_effect(c)
+function c511005707.initial_effect(c)
 --Pay 100 lp toatk 
 local e0=Effect.CreateEffect(c)
 e0:SetType(EFFECT_TYPE_SINGLE)
 e0:SetCode(EFFECT_ATTACK_COST)
-e0:SetCost(c33599956.atcost)
-e0:SetOperation(c33599956.atop)
+e0:SetCost(c511005707.atcost)
+e0:SetOperation(c511005707.atop)
 c:RegisterEffect(e0)
 --atk up
 local e1=Effect.CreateEffect(c)
 e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 e1:SetRange(LOCATION_MZONE)
-e1:SetCondition(c33599956.atkcon)
-e1:SetOperation(c33599956.atkop)
+e1:SetCondition(c511005707.atkcon)
+e1:SetOperation(c511005707.atkop)
 c:RegisterEffect(e1)
 
 end
 
-function c33599956.atcost(e,c,tp)
+function c511005707.atcost(e,c,tp)
 return Duel.CheckLPCost(tp,100)
 end
-function c33599956.atop(e,tp,eg,ep,ev,re,r,rp)
+function c511005707.atop(e,tp,eg,ep,ev,re,r,rp)
 Duel.PayLPCost(tp,100)
 local c=e:GetHandler()
 
@@ -30,7 +30,7 @@ end
 
 
 
-function c33599956.atkcon(e,tp,eg,ep,ev,re,r,rp)
+function c511005707.atkcon(e,tp,eg,ep,ev,re,r,rp)
 local a=Duel.GetAttacker()
 local d=Duel.GetAttackTarget()
 return (a:GetControler()==tp and a:IsRelateToBattle() and d:GetAttack()~=d:GetBaseAttack()) or (d and d:GetControler()==tp and d:IsRelateToBattle() and a:GetAttack()~=a:GetBaseAttack()) or (a:GetControler()==tp and a:IsRelateToBattle() and d:GetAttack()~=d:GetBaseDefense())
@@ -39,7 +39,7 @@ end
 
 
 
-function c33599956.atkop(e,tp,eg,ep,ev,re,r,rp)
+function c511005707.atkop(e,tp,eg,ep,ev,re,r,rp)
 local atk=0
 if e:GetHandler()==Duel.GetAttacker() then
 local bc=Duel.GetAttackTarget()	

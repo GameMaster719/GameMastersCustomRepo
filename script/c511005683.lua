@@ -1,4 +1,4 @@
---Dragon Seeker (DOR)
+--Dragon Deeker (DOR)
 --scripted by GameMaster (GM)
 function c511005683.initial_effect(c)
 	--atkdef up
