@@ -1,9 +1,10 @@
-SET UP FOR AI STUFF
+-HOW TO SET UP THE AI FILES-
+(These AI files are to be used in YGO 1.033)
 
-1.after you extract the files; open the folder for ai. Add Gamemaster.ai to where you find ai and cheating.ai.
+1. Extract the files; open the folder for ai. Add Gamemaster.ai to where you find ai and cheating.ai.
 
-2.Then there is a folder in ai that is called deck; this is where you put the decks i have worked on for the ai, they are Marik, Yamiyugi, Rapheal and rarehunter strings.
+2.Locate folder in AI(in game) that is called deck; this is where you put the decks i have worked on for the ai. Currently they are Marik, Yamiyugi, Rapheal and Rare Hunter Strings. Grab the files mentioned and place them in that location.
 
-------------------------
-3. Grab the decks for them and put them into decks..
-4. open a new game select ai / choose Gamemaster.ai to handler them 
+3. Open a new game, select ai / then choose Gamemaster.ai to handler them. Try them out and let me know what you think.
+
+***THANKS TO Snarky & Xaddgx for teaching me AI and helping me along the way.***
